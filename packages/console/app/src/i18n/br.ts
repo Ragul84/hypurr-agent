@@ -198,12 +198,12 @@ export const dict = {
     "O Zen dá acesso a um conjunto selecionado de modelos de IA que a OpenCode testou e avaliou especificamente para agentes de codificação. Não precisa se preocupar com desempenho e qualidade inconsistentes entre provedores, use modelos validados que funcionam.",
   "home.zenCta.link": "Saiba mais sobre o Zen",
 
-  "zen.title": "OpenCode Zen | Um conjunto selecionado de modelos confiáveis e otimizados para agentes de codificação",
+  "zen.title": "Hypurr free models | Um conjunto selecionado de modelos confiáveis e otimizados para agentes de codificação",
   "zen.hero.title": "Modelos confiáveis e otimizados para agentes de codificação",
   "zen.hero.body":
     "O Zen dá acesso a um conjunto selecionado de modelos de IA que a OpenCode testou e avaliou especificamente para agentes de codificação. Não precisa se preocupar com desempenho e qualidade inconsistentes, use modelos validados que funcionam.",
 
-  "zen.faq.q1": "O que é OpenCode Zen?",
+  "zen.faq.q1": "O que é Hypurr free models?",
   "zen.faq.a1":
     "Zen é um conjunto selecionado de modelos de IA testados e avaliados para agentes de codificação, criado pela equipe por trás do OpenCode.",
   "zen.faq.q2": "O que torna o Zen mais preciso?",

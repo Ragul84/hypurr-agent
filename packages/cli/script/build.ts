@@ -9,7 +9,7 @@ import pkg from "../package.json"
 import { modelsData } from "./generate"
 
 const dir = path.resolve(import.meta.dirname, "..")
-const binary = "lildax"
+const binary = "hypurr-agent"
 process.chdir(dir)
 
 await rm("dist", { recursive: true, force: true })
@@ -105,7 +105,7 @@ for (const item of targets) {
         name: `@opencode-ai/${name}`,
         version: Script.version,
         license: "MIT",
-        repository: { type: "git", url: "git+https://github.com/anomalyco/opencode.git" },
+        repository: { type: "git", url: "git+https://github.com/Ragul84/hypurr-agent.git" },
         os: [item.os],
         cpu: [item.arch],
       },

@@ -1,17 +1,17 @@
 <p align="center">
-  <a href="https://opencode.ai">
+  <a href="https://hypurr.dev">
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="شعار OpenCode">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="شعار Hypurr Agent">
     </picture>
   </a>
 </p>
 <p align="center">وكيل برمجة بالذكاء الاصطناعي مفتوح المصدر.</p>
 <p align="center">
-  <a href="https://opencode.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/opencode-ai"><img alt="npm" src="https://img.shields.io/npm/v/opencode-ai?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://hypurr.dev/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
+  <a href="https://www.npmjs.com/package/hypurr-agent"><img alt="npm" src="https://img.shields.io/npm/v/hypurr-agent?style=flat-square" /></a>
+  <a href="https://github.com/Ragul84/hypurr-agent/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/Ragul84/hypurr-agent/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
+[![Hypurr Agent Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://hypurr.dev)
 
 ---
 
@@ -47,18 +47,18 @@
 
 ```bash
 # YOLO
-curl -fsSL https://opencode.ai/install | bash
+curl -fsSL https://hypurr.dev/install | bash
 
 # مديري الحزم
-npm i -g opencode-ai@latest        # او bun/pnpm/yarn
+npm i -g hypurr-agent@latest        # او bun/pnpm/yarn
 scoop install opencode             # Windows
 choco install opencode             # Windows
-brew install anomalyco/tap/opencode # macOS و Linux (موصى به، دائما محدث)
+brew install ragul84/tap/hypurr-agent # macOS و Linux (موصى به، دائما محدث)
 brew install opencode              # macOS و Linux (صيغة brew الرسمية، تحديث اقل)
 sudo pacman -S opencode            # Arch Linux (Stable)
 paru -S opencode-bin               # Arch Linux (Latest from AUR)
 mise use -g opencode               # اي نظام
-nix run nixpkgs#opencode           # او github:anomalyco/opencode لاحدث فرع dev
+nix run nixpkgs#opencode           # او github:Ragul84/hypurr-agent لاحدث فرع dev
 ```
 
 > [!TIP]
@@ -66,7 +66,7 @@ nix run nixpkgs#opencode           # او github:anomalyco/opencode لاحدث �
 
 ### تطبيق سطح المكتب (BETA)
 
-يتوفر OpenCode ايضا كتطبيق سطح مكتب. قم بالتنزيل مباشرة من [صفحة الاصدارات](https://github.com/anomalyco/opencode/releases) او من [opencode.ai/download](https://opencode.ai/download).
+يتوفر Hypurr Agent ايضا كتطبيق سطح مكتب. قم بالتنزيل مباشرة من [صفحة الاصدارات](https://github.com/Ragul84/hypurr-agent/releases) او من [opencode.ai/download](https://hypurr.dev/download).
 
 | المنصة                | التنزيل                            |
 | --------------------- | ---------------------------------- |
@@ -89,17 +89,17 @@ scoop bucket add extras; scoop install extras/opencode-desktop
 1. `$OPENCODE_INSTALL_DIR` - مجلد تثبيت مخصص
 2. `$XDG_BIN_DIR` - مسار متوافق مع مواصفات XDG Base Directory
 3. `$HOME/bin` - مجلد الثنائيات القياسي للمستخدم (ان وجد او امكن انشاؤه)
-4. `$HOME/.opencode/bin` - المسار الافتراضي الاحتياطي
+4. `$HOME/.hypurr/agent/bin` - المسار الافتراضي الاحتياطي
 
 ```bash
 # امثلة
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://opencode.ai/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://opencode.ai/install | bash
+OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://hypurr.dev/install | bash
+XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://hypurr.dev/install | bash
 ```
 
 ### Agents
 
-يتضمن OpenCode وكيليْن (Agents) مدمجين يمكنك التبديل بينهما باستخدام زر `Tab`.
+يتضمن Hypurr Agent وكيليْن (Agents) مدمجين يمكنك التبديل بينهما باستخدام زر `Tab`.
 
 - **build** - الافتراضي، وكيل بصلاحيات كاملة لاعمال التطوير
 - **plan** - وكيل للقراءة فقط للتحليل واستكشاف الكود
@@ -110,19 +110,19 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://opencode.ai/install | bash
 بالاضافة الى ذلك يوجد وكيل فرعي **general** للبحث المعقد والمهام متعددة الخطوات.
 يستخدم داخليا ويمكن استدعاؤه بكتابة `@general` في الرسائل.
 
-تعرف على المزيد حول [agents](https://opencode.ai/docs/agents).
+تعرف على المزيد حول [agents](https://hypurr.dev/docs/agents).
 
 ### التوثيق
 
-لمزيد من المعلومات حول كيفية ضبط OpenCode، [**راجع التوثيق**](https://opencode.ai/docs).
+لمزيد من المعلومات حول كيفية ضبط Hypurr Agent، [**راجع التوثيق**](https://hypurr.dev/docs).
 
 ### المساهمة
 
-اذا كنت مهتما بالمساهمة في OpenCode، يرجى قراءة [contributing docs](./CONTRIBUTING.md) قبل ارسال pull request.
+اذا كنت مهتما بالمساهمة في Hypurr Agent، يرجى قراءة [contributing docs](./CONTRIBUTING.md) قبل ارسال pull request.
 
-### البناء فوق OpenCode
+### البناء فوق Hypurr Agent
 
-اذا كنت تعمل على مشروع مرتبط بـ OpenCode ويستخدم "opencode" كجزء من اسمه (مثل "opencode-dashboard" او "opencode-mobile")، يرجى اضافة ملاحظة في README توضح انه ليس مبنيا بواسطة فريق OpenCode ولا يرتبط بنا بأي شكل.
+اذا كنت تعمل على مشروع مرتبط بـ Hypurr Agent ويستخدم "opencode" كجزء من اسمه (مثل "opencode-dashboard" او "opencode-mobile")، يرجى اضافة ملاحظة في README توضح انه ليس مبنيا بواسطة فريق Hypurr Agent ولا يرتبط بنا بأي شكل.
 
 ---
 

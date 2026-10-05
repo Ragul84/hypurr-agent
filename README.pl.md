@@ -1,17 +1,17 @@
 <p align="center">
-  <a href="https://opencode.ai">
+  <a href="https://hypurr.dev">
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Hypurr Agent logo">
     </picture>
   </a>
 </p>
 <p align="center">Otwartoźródłowy agent kodujący AI.</p>
 <p align="center">
-  <a href="https://opencode.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/opencode-ai"><img alt="npm" src="https://img.shields.io/npm/v/opencode-ai?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://hypurr.dev/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
+  <a href="https://www.npmjs.com/package/hypurr-agent"><img alt="npm" src="https://img.shields.io/npm/v/hypurr-agent?style=flat-square" /></a>
+  <a href="https://github.com/Ragul84/hypurr-agent/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/Ragul84/hypurr-agent/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
+[![Hypurr Agent Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://hypurr.dev)
 
 ---
 
@@ -47,18 +47,18 @@
 
 ```bash
 # YOLO
-curl -fsSL https://opencode.ai/install | bash
+curl -fsSL https://hypurr.dev/install | bash
 
 # Menedżery pakietów
-npm i -g opencode-ai@latest        # albo bun/pnpm/yarn
+npm i -g hypurr-agent@latest        # albo bun/pnpm/yarn
 scoop install opencode             # Windows
 choco install opencode             # Windows
-brew install anomalyco/tap/opencode # macOS i Linux (polecane, zawsze aktualne)
+brew install ragul84/tap/hypurr-agent # macOS i Linux (polecane, zawsze aktualne)
 brew install opencode              # macOS i Linux (oficjalna formuła brew, rzadziej aktualizowana)
 sudo pacman -S opencode            # Arch Linux (Stable)
 paru -S opencode-bin               # Arch Linux (Latest from AUR)
 mise use -g opencode               # dowolny system
-nix run nixpkgs#opencode           # lub github:anomalyco/opencode dla najnowszej gałęzi dev
+nix run nixpkgs#opencode           # lub github:Ragul84/hypurr-agent dla najnowszej gałęzi dev
 ```
 
 > [!TIP]
@@ -66,7 +66,7 @@ nix run nixpkgs#opencode           # lub github:anomalyco/opencode dla najnowsze
 
 ### Aplikacja desktopowa (BETA)
 
-OpenCode jest także dostępny jako aplikacja desktopowa. Pobierz ją bezpośrednio ze strony [releases](https://github.com/anomalyco/opencode/releases) lub z [opencode.ai/download](https://opencode.ai/download).
+Hypurr Agent jest także dostępny jako aplikacja desktopowa. Pobierz ją bezpośrednio ze strony [releases](https://github.com/Ragul84/hypurr-agent/releases) lub z [opencode.ai/download](https://hypurr.dev/download).
 
 | Platforma             | Pobieranie                         |
 | --------------------- | ---------------------------------- |
@@ -89,17 +89,17 @@ Skrypt instalacyjny stosuje następujący priorytet wyboru ścieżki instalacji:
 1. `$OPENCODE_INSTALL_DIR` - Własny katalog instalacji
 2. `$XDG_BIN_DIR` - Ścieżka zgodna ze specyfikacją XDG Base Directory
 3. `$HOME/bin` - Standardowy katalog binarny użytkownika (jeśli istnieje lub można go utworzyć)
-4. `$HOME/.opencode/bin` - Domyślny fallback
+4. `$HOME/.hypurr/agent/bin` - Domyślny fallback
 
 ```bash
 # Przykłady
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://opencode.ai/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://opencode.ai/install | bash
+OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://hypurr.dev/install | bash
+XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://hypurr.dev/install | bash
 ```
 
 ### Agents
 
-OpenCode zawiera dwóch wbudowanych agentów, między którymi możesz przełączać się klawiszem `Tab`.
+Hypurr Agent zawiera dwóch wbudowanych agentów, między którymi możesz przełączać się klawiszem `Tab`.
 
 - **build** - Domyślny agent z pełnym dostępem do pracy developerskiej
 - **plan** - Agent tylko do odczytu do analizy i eksploracji kodu
@@ -110,19 +110,19 @@ OpenCode zawiera dwóch wbudowanych agentów, między którymi możesz przełąc
 Dodatkowo jest subagent **general** do złożonych wyszukiwań i wieloetapowych zadań.
 Jest używany wewnętrznie i można go wywołać w wiadomościach przez `@general`.
 
-Dowiedz się więcej o [agents](https://opencode.ai/docs/agents).
+Dowiedz się więcej o [agents](https://hypurr.dev/docs/agents).
 
 ### Dokumentacja
 
-Więcej informacji o konfiguracji OpenCode znajdziesz w [**dokumentacji**](https://opencode.ai/docs).
+Więcej informacji o konfiguracji Hypurr Agent znajdziesz w [**dokumentacji**](https://hypurr.dev/docs).
 
 ### Współtworzenie
 
-Jeśli chcesz współtworzyć OpenCode, przeczytaj [contributing docs](./CONTRIBUTING.md) przed wysłaniem pull requesta.
+Jeśli chcesz współtworzyć Hypurr Agent, przeczytaj [contributing docs](./CONTRIBUTING.md) przed wysłaniem pull requesta.
 
-### Budowanie na OpenCode
+### Budowanie na Hypurr Agent
 
-Jeśli pracujesz nad projektem związanym z OpenCode i używasz "opencode" jako części nazwy (na przykład "opencode-dashboard" lub "opencode-mobile"), dodaj proszę notatkę do swojego README, aby wyjaśnić, że projekt nie jest tworzony przez zespół OpenCode i nie jest z nami w żaden sposób powiązany.
+Jeśli pracujesz nad projektem związanym z Hypurr Agent i używasz "opencode" jako części nazwy (na przykład "opencode-dashboard" lub "opencode-mobile"), dodaj proszę notatkę do swojego README, aby wyjaśnić, że projekt nie jest tworzony przez zespół Hypurr Agent i nie jest z nami w żaden sposób powiązany.
 
 ---
 

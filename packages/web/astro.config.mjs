@@ -31,7 +31,7 @@ export default defineConfig({
     configSchema(),
     solidJs(),
     starlight({
-      title: "OpenCode",
+      title: "Hypurr Agent",
       defaultLocale: "root",
       locales: {
         root: {

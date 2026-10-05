@@ -46,7 +46,7 @@ describe("LLMGatewayPlugin", () => {
       yield* addPlugin()
       expect((yield* catalog.provider.get(ProviderV2.ID.make("llmgateway")))?.request.headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://opencode.ai/",
+        "HTTP-Referer": "https://hypurr.dev/",
         "X-Title": "opencode",
         "X-Source": "opencode",
       })

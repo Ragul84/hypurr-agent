@@ -1,6 +1,6 @@
-# OpenCode Desktop
+# Hypurr Agent Desktop
 
-The OpenCode Desktop app, built with Electron.
+The Hypurr Agent Desktop app, built with Electron.
 
 ## Development
 

@@ -11,7 +11,7 @@ description: Распространенные проблемы и способы
 
 Лог-файлы записываются в:
 
-- **macOS/Linux**: `~/.local/share/opencode/log/`
+- **macOS/Linux**: `~/.hypurr/agent/log/`
 - **Windows**: нажмите `WIN+R` и вставьте `%USERPROFILE%\.local\share\opencode\log`.
 
 Файлам журналов присваиваются имена с метками времени (например, `2025-01-09T123456.log`), и сохраняются 10 последних файлов журналов.
@@ -24,7 +24,7 @@ description: Распространенные проблемы и способы
 
 opencode хранит данные сеанса и другие данные приложения на диске по адресу:
 
-- **macOS/Linux**: `~/.local/share/opencode/`
+- **macOS/Linux**: `~/.hypurr/agent/`
 - **Windows**: нажмите `WIN+R` и вставьте `%USERPROFILE%\.local\share\opencode`.
 
 Этот каталог содержит:
@@ -45,7 +45,7 @@ opencode Desktop запускает локальный сервер opencode (с
 
 - Полностью закройте и перезапустите приложение.
 - Если приложение отображает экран с ошибкой, нажмите **Перезапустить** и скопируйте сведения об ошибке.
-- Только для macOS: меню `OpenCode` -> **Обновить веб-просмотр** (помогает, если пользовательский интерфейс пуст или завис).
+- Только для macOS: меню `Hypurr Agent` -> **Обновить веб-просмотр** (помогает, если пользовательский интерфейс пуст или завис).
 
 ---
 
@@ -57,15 +57,15 @@ opencode Desktop запускает локальный сервер opencode (с
 
 Откройте файл глобальной конфигурации и найдите ключ `plugin`.
 
-- **macOS/Linux**: `~/.config/opencode/opencode.jsonc` (или `~/.config/opencode/opencode.json`)
-- **macOS/Linux** (более ранние версии): `~/.local/share/opencode/opencode.jsonc`
-- **Windows**: нажмите `WIN+R` и вставьте `%USERPROFILE%\.config\opencode\opencode.jsonc`.
+- **macOS/Linux**: `~/.hypurr/agent/config/hypurr-agent.jsonc` (или `~/.hypurr/agent/config/hypurr-agent.json`)
+- **macOS/Linux** (более ранние версии): `~/.hypurr/agent/hypurr-agent.jsonc`
+- **Windows**: нажмите `WIN+R` и вставьте `%USERPROFILE%\.config\opencode\hypurr-agent.jsonc`.
 
 Если у вас настроены плагины, временно отключите их, удалив ключ или установив для него пустой массив:
 
 ```jsonc
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://hypurr.dev/config.json",
   "plugin": [],
 }
 ```
@@ -75,10 +75,10 @@ opencode Desktop запускает локальный сервер opencode (с
 opencode также может загружать локальные плагины с диска. Временно переместите их в сторону (или переименуйте папку) и перезапустите настольное приложение:
 
 - **Глобальные плагины**
-  - **macOS/Linux**: `~/.config/opencode/plugins/`
+  - **macOS/Linux**: `~/.hypurr/agent/config/plugins/`
   - **Windows**: нажмите `WIN+R` и вставьте `%USERPROFILE%\.config\opencode\plugins`.
 - **Плагины проекта** (только если вы используете конфигурацию для каждого проекта)
-  - `<your-project>/.opencode/plugins/`
+  - `<your-project>/.hypurr/plugins/`
 
 Если приложение снова начнет работать, повторно включите плагины по одному, чтобы определить, какой из них вызывает проблему.
 
@@ -111,7 +111,7 @@ opencode Desktop может либо запустить собственный �
 
 #### Удалите `server.port`/`server.hostname` из вашей конфигурации.
 
-Если ваш `opencode.json(c)` содержит раздел `server`, временно удалите его и перезапустите настольное приложение.
+Если ваш `hypurr-agent.json(c)` содержит раздел `server`, временно удалите его и перезапустите настольное приложение.
 
 #### Проверьте переменные среды
 
@@ -177,7 +177,7 @@ opencode Desktop отображает системные уведомления 
 
    Лучший способ сообщить об ошибках или запросить новые функции — через наш репозиторий GitHub:
 
-   [**github.com/anomalyco/opencode/issues**](https://github.com/anomalyco/opencode/issues)
+   [**github.com/Ragul84/hypurr-agent/issues**](https://github.com/Ragul84/hypurr-agent/issues)
 
    Прежде чем создавать новую проблему, выполните поиск по существующим проблемам, чтобы узнать, не сообщалось ли уже о вашей проблеме.
 
@@ -185,7 +185,7 @@ opencode Desktop отображает системные уведомления 
 
    Для получения помощи в режиме реального времени и обсуждения в сообществе присоединяйтесь к нашему серверу Discord:
 
-   [**opencode.ai/discord**](https://opencode.ai/discord)
+   [**opencode.ai/discord**](https://hypurr.dev/discord)
 
 ---
 
@@ -195,7 +195,7 @@ opencode Desktop отображает системные уведомления 
 
 ---
 
-### opencode не запускается
+### hypurr-agent не запускается
 
 1. Проверьте журналы на наличие сообщений об ошибках
 2. Попробуйте запустить `--print-logs`, чтобы увидеть вывод в terminal.
@@ -225,7 +225,7 @@ opencode Desktop отображает системные уведомления 
 
 - `openai/gpt-4.1`
 - `openrouter/google/gemini-2.5-flash`
-- `opencode/kimi-k2`
+- `hypurr-agent/kimi-k2`
 
 Чтобы выяснить, к каким моделям у вас есть доступ, запустите `opencode models`.
 
@@ -241,7 +241,7 @@ opencode Desktop отображает системные уведомления 
 2. Если проблема не устранена, попробуйте очистить сохраненную конфигурацию:
 
    ```bash
-   rm -rf ~/.local/share/opencode
+   rm -rf ~/.hypurr/agent
    ```
 
    В Windows нажмите `WIN+R` и удалите: `%USERPROFILE%\.local\share\opencode`.

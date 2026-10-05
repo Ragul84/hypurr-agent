@@ -210,8 +210,8 @@ const TIPS: Tip[] = [
     if (!items.length) return undefined
     return `Use ${items.map(shortcutText).join(" / ")} for parent/child sessions`
   },
-  "Create {highlight}opencode.json{/highlight} for server settings, and {highlight}tui.json{/highlight} for TUI",
-  "Place TUI settings in {highlight}~/.config/opencode/tui.json{/highlight} for global config",
+  "Create {highlight}hypurr-agent.json{/highlight} for server settings, and {highlight}tui.json{/highlight} for TUI",
+  "Place TUI settings in {highlight}~/.hypurr/agent/config/tui.json{/highlight} for global config",
   "Add {highlight}$schema{/highlight} to your config for autocomplete in your editor",
   "Configure {highlight}model{/highlight} in config to set your default model",
   "Override any keybind in {highlight}tui.json{/highlight} via the {highlight}keybinds{/highlight} section",
@@ -274,8 +274,8 @@ const TIPS: Tip[] = [
     shortcuts.commandList()
       ? `Toggle username display in chat via the command palette (${shortcutText(shortcuts.commandList())})`
       : "Toggle username display in chat via the command palette",
-  "Run {highlight}docker run -it --rm ghcr.io/anomalyco/opencode{/highlight} in a container",
-  "Use {highlight}/connect{/highlight} with OpenCode Zen for curated, tested models",
+  "Run {highlight}docker run -it --rm ghcr.io/Ragul84/hypurr-agent{/highlight} in a container",
+  "Use {highlight}/connect{/highlight} with Hypurr free models for curated, tested models",
   "Commit your project's {highlight}AGENTS.md{/highlight} file to Git for team sharing",
   "Use {highlight}/review{/highlight} to review uncommitted changes, branches, or PRs",
   (shortcuts) => `Use ${commandText("/help", shortcuts.helpShow())} to show the help dialog`,

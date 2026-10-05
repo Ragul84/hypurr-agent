@@ -38,7 +38,7 @@ export default function TermsOfService() {
                 <strong>ANOMALY INNOVATIONS, INC.</strong> ("OpenCode," "we" and "us"). Your use of the Services in any
                 way means that you agree to all of these Terms, and these Terms will remain in effect while you use the
                 Services. These Terms include the provisions in this document as well as those in the Privacy Policy{" "}
-                <a href={language.route("/legal/privacy-policy")}>https://opencode.ai/legal/privacy-policy</a>.{" "}
+                <a href={language.route("/legal/privacy-policy")}>https://hypurr.dev/legal/privacy-policy</a>.{" "}
                 <strong>
                   Your use of or participation in certain Services may also be subject to additional policies, rules
                   and/or conditions ("Additional Terms"), which are incorporated herein by reference, and you understand
@@ -75,7 +75,7 @@ export default function TermsOfService() {
               <p>
                 OpenCode is an AI-powered coding agent that helps you write, understand, and modify code using large
                 language models. Certain of these large language models are provided by third parties ("Third Party
-                Models") and certain of these models are provided directly by us if you use the OpenCode Zen paid
+                Models") and certain of these models are provided directly by us if you use the Hypurr free models paid
                 offering ("Zen"). Regardless of whether you use Third Party Models or Zen, OpenCode enables you to
                 access the functionality of models through a coding agent running within your terminal.
               </p>
@@ -102,7 +102,7 @@ export default function TermsOfService() {
               <p>
                 OpenCode takes the privacy of its users very seriously. For the current OpenCode Privacy Policy, please
                 click here{" "}
-                <a href="https://opencode.ai/legal/privacy-policy">https://opencode.ai/legal/privacy-policy</a>.
+                <a href="https://hypurr.dev/legal/privacy-policy">https://hypurr.dev/legal/privacy-policy</a>.
               </p>
 
               <h3>Children's Online Privacy Protection Act</h3>
@@ -270,7 +270,7 @@ export default function TermsOfService() {
               <p>
                 Certain of our Services, including Zen, may be subject to payments now or in the future (the "Paid
                 Services"). Please see our Paid Services page{" "}
-                <a href={language.route("/zen")}>https://opencode.ai/zen</a> for a description of the current Paid
+                <a href={language.route("/zen")}>https://api.hypurr.dev/v1/llm</a> for a description of the current Paid
                 Services. Please note that any payment terms presented to you in the process of using or signing up for
                 a Paid Service are deemed part of these Terms.
               </p>
@@ -311,7 +311,7 @@ export default function TermsOfService() {
                 CONFIRMED BY US) THAT YOU HAVE TERMINATED THIS AUTHORIZATION OR WISH TO CHANGE YOUR PAYMENT METHOD. SUCH
                 NOTICE WILL NOT AFFECT CHARGES SUBMITTED BEFORE WE REASONABLY COULD ACT. TO TERMINATE YOUR AUTHORIZATION
                 OR CHANGE YOUR PAYMENT METHOD, GO TO ACCOUNT SETTINGS{" "}
-                <a href="https://opencode.ai/auth">https://opencode.ai/auth</a>.
+                <a href="https://hypurr.dev/auth">https://hypurr.dev/auth</a>.
               </p>
 
               <h3>Free Trials and Other Promotions</h3>
@@ -326,7 +326,7 @@ export default function TermsOfService() {
               <h2 id="what-if-i-want-to-stop">What if I want to stop using the Services?</h2>
               <p>
                 You're free to do that at any time; please refer to our Privacy Policy{" "}
-                <a href={language.route("/legal/privacy-policy")}>https://opencode.ai/legal/privacy-policy</a>, as well
+                <a href={language.route("/legal/privacy-policy")}>https://hypurr.dev/legal/privacy-policy</a>, as well
                 as the licenses above, to understand how we treat information you provide to us after you have stopped
                 using our Services.
               </p>

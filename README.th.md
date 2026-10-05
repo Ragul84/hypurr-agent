@@ -1,17 +1,17 @@
 <p align="center">
-  <a href="https://opencode.ai">
+  <a href="https://hypurr.dev">
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Hypurr Agent logo">
     </picture>
   </a>
 </p>
 <p align="center">เอเจนต์การเขียนโค้ดด้วย AI แบบโอเพนซอร์ส</p>
 <p align="center">
-  <a href="https://opencode.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/opencode-ai"><img alt="npm" src="https://img.shields.io/npm/v/opencode-ai?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="สถานะการสร้าง" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://hypurr.dev/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
+  <a href="https://www.npmjs.com/package/hypurr-agent"><img alt="npm" src="https://img.shields.io/npm/v/hypurr-agent?style=flat-square" /></a>
+  <a href="https://github.com/Ragul84/hypurr-agent/actions/workflows/publish.yml"><img alt="สถานะการสร้าง" src="https://img.shields.io/github/actions/workflow/status/Ragul84/hypurr-agent/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
+[![Hypurr Agent Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://hypurr.dev)
 
 ---
 
@@ -47,18 +47,18 @@
 
 ```bash
 # YOLO
-curl -fsSL https://opencode.ai/install | bash
+curl -fsSL https://hypurr.dev/install | bash
 
 # ตัวจัดการแพ็กเกจ
-npm i -g opencode-ai@latest        # หรือ bun/pnpm/yarn
+npm i -g hypurr-agent@latest        # หรือ bun/pnpm/yarn
 scoop install opencode             # Windows
 choco install opencode             # Windows
-brew install anomalyco/tap/opencode # macOS และ Linux (แนะนำ อัปเดตเสมอ)
+brew install ragul84/tap/hypurr-agent # macOS และ Linux (แนะนำ อัปเดตเสมอ)
 brew install opencode              # macOS และ Linux (brew formula อย่างเป็นทางการ อัปเดตน้อยกว่า)
 sudo pacman -S opencode            # Arch Linux (Stable)
 paru -S opencode-bin               # Arch Linux (Latest from AUR)
 mise use -g opencode               # ระบบปฏิบัติการใดก็ได้
-nix run nixpkgs#opencode           # หรือ github:anomalyco/opencode สำหรับสาขาพัฒนาล่าสุด
+nix run nixpkgs#opencode           # หรือ github:Ragul84/hypurr-agent สำหรับสาขาพัฒนาล่าสุด
 ```
 
 > [!TIP]
@@ -66,7 +66,7 @@ nix run nixpkgs#opencode           # หรือ github:anomalyco/opencode ส�
 
 ### แอปพลิเคชันเดสก์ท็อป (เบต้า)
 
-OpenCode มีให้ใช้งานเป็นแอปพลิเคชันเดสก์ท็อป ดาวน์โหลดโดยตรงจาก [หน้ารุ่น](https://github.com/anomalyco/opencode/releases) หรือ [opencode.ai/download](https://opencode.ai/download)
+Hypurr Agent มีให้ใช้งานเป็นแอปพลิเคชันเดสก์ท็อป ดาวน์โหลดโดยตรงจาก [หน้ารุ่น](https://github.com/Ragul84/hypurr-agent/releases) หรือ [opencode.ai/download](https://hypurr.dev/download)
 
 | แพลตฟอร์ม             | ดาวน์โหลด                          |
 | --------------------- | ---------------------------------- |
@@ -89,17 +89,17 @@ scoop bucket add extras; scoop install extras/opencode-desktop
 1. `$OPENCODE_INSTALL_DIR` - ไดเรกทอรีการติดตั้งที่กำหนดเอง
 2. `$XDG_BIN_DIR` - เส้นทางที่สอดคล้องกับ XDG Base Directory Specification
 3. `$HOME/bin` - ไดเรกทอรีไบนารีผู้ใช้มาตรฐาน (หากมีอยู่หรือสามารถสร้างได้)
-4. `$HOME/.opencode/bin` - ค่าสำรองเริ่มต้น
+4. `$HOME/.hypurr/agent/bin` - ค่าสำรองเริ่มต้น
 
 ```bash
 # ตัวอย่าง
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://opencode.ai/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://opencode.ai/install | bash
+OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://hypurr.dev/install | bash
+XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://hypurr.dev/install | bash
 ```
 
 ### เอเจนต์
 
-OpenCode รวมเอเจนต์ในตัวสองตัวที่คุณสามารถสลับได้ด้วยปุ่ม `Tab`
+Hypurr Agent รวมเอเจนต์ในตัวสองตัวที่คุณสามารถสลับได้ด้วยปุ่ม `Tab`
 
 - **build** - เอเจนต์เริ่มต้น มีสิทธิ์เข้าถึงแบบเต็มสำหรับงานพัฒนา
 - **plan** - เอเจนต์อ่านอย่างเดียวสำหรับการวิเคราะห์และการสำรวจโค้ด
@@ -110,19 +110,19 @@ OpenCode รวมเอเจนต์ในตัวสองตัวที�
 นอกจากนี้ยังมีเอเจนต์ย่อย **general** สำหรับการค้นหาที่ซับซ้อนและงานหลายขั้นตอน
 ใช้ภายในและสามารถเรียกใช้ได้โดยใช้ `@general` ในข้อความ
 
-เรียนรู้เพิ่มเติมเกี่ยวกับ [เอเจนต์](https://opencode.ai/docs/agents)
+เรียนรู้เพิ่มเติมเกี่ยวกับ [เอเจนต์](https://hypurr.dev/docs/agents)
 
 ### เอกสารประกอบ
 
-สำหรับข้อมูลเพิ่มเติมเกี่ยวกับวิธีกำหนดค่า OpenCode [**ไปที่เอกสารของเรา**](https://opencode.ai/docs)
+สำหรับข้อมูลเพิ่มเติมเกี่ยวกับวิธีกำหนดค่า Hypurr Agent [**ไปที่เอกสารของเรา**](https://hypurr.dev/docs)
 
 ### การมีส่วนร่วม
 
-หากคุณสนใจที่จะมีส่วนร่วมใน OpenCode โปรดอ่าน [เอกสารการมีส่วนร่วม](./CONTRIBUTING.md) ก่อนส่ง Pull Request
+หากคุณสนใจที่จะมีส่วนร่วมใน Hypurr Agent โปรดอ่าน [เอกสารการมีส่วนร่วม](./CONTRIBUTING.md) ก่อนส่ง Pull Request
 
-### การสร้างบน OpenCode
+### การสร้างบน Hypurr Agent
 
-หากคุณทำงานในโปรเจกต์ที่เกี่ยวข้องกับ OpenCode และใช้ "opencode" เป็นส่วนหนึ่งของชื่อ เช่น "opencode-dashboard" หรือ "opencode-mobile" โปรดเพิ่มหมายเหตุใน README ของคุณเพื่อชี้แจงว่าไม่ได้สร้างโดยทีม OpenCode และไม่ได้เกี่ยวข้องกับเราในทางใด
+หากคุณทำงานในโปรเจกต์ที่เกี่ยวข้องกับ Hypurr Agent และใช้ "opencode" เป็นส่วนหนึ่งของชื่อ เช่น "opencode-dashboard" หรือ "opencode-mobile" โปรดเพิ่มหมายเหตุใน README ของคุณเพื่อชี้แจงว่าไม่ได้สร้างโดยทีม Hypurr Agent และไม่ได้เกี่ยวข้องกับเราในทางใด
 
 ---
 

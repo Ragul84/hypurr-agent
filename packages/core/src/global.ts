@@ -1,22 +1,22 @@
 import path from "path"
 import fs from "fs/promises"
-import { xdgData, xdgCache, xdgConfig, xdgState } from "xdg-basedir"
 import os from "os"
 import { Context, Effect, Layer } from "effect"
 import { Flock } from "./util/flock"
 import { Flag } from "./flag/flag"
 import { makeGlobalNode } from "./effect/app-node"
 
-const app = "opencode"
-const data = path.join(xdgData!, app)
-const cache = path.join(xdgCache!, app)
-const config = path.join(xdgConfig!, app)
-const state = path.join(xdgState!, app)
-const tmp = path.join(os.tmpdir(), app)
+/** OpenCode stores everything under ~/.hypurr/agent (not XDG opencode paths). */
+const root = path.join(os.homedir(), ".hypurr", "agent")
+const data = root
+const cache = path.join(root, "cache")
+const config = path.join(root, "config")
+const state = path.join(root, "state")
+const tmp = path.join(os.tmpdir(), "hypurr-agent")
 
 const paths = {
   get home() {
-    return process.env.OPENCODE_TEST_HOME ?? os.homedir()
+    return process.env.HYPURR_AGENT_TEST_HOME ?? process.env.OPENCODE_TEST_HOME ?? os.homedir()
   },
   data,
   bin: path.join(cache, "bin"),
@@ -42,7 +42,7 @@ await Promise.all([
   fs.mkdir(Path.repos, { recursive: true }),
 ])
 
-export class Service extends Context.Service<Service, Interface>()("@opencode/Global") {}
+export class Service extends Context.Service<Service, Interface>()("@opencode-ai/Global") {}
 
 export interface Interface {
   readonly home: string

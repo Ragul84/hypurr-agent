@@ -1,9 +1,9 @@
 import { statModel } from "@opencode-ai/stats-core/domain/model-normalization"
 import { query } from "@solidjs/router"
 
-export const modelCatalogSourceUrl = "https://models.opencode.ai/catalog.json"
-export const modelCatalogPricingUrl = "https://models.opencode.ai/api.json"
-export const modelCatalogLabSourceUrl = "https://models.opencode.ai/labs"
+export const modelCatalogSourceUrl = "https://api.hypurr.dev/v1/models-meta/catalog.json"
+export const modelCatalogPricingUrl = "https://api.hypurr.dev/v1/models-meta/api.json"
+export const modelCatalogLabSourceUrl = "https://api.hypurr.dev/v1/models-meta/labs"
 
 export type ModelCatalogCost = {
   input: number

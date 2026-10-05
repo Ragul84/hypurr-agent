@@ -33607,9 +33607,9 @@
     "id": "opencode-go",
     "env": ["OPENCODE_API_KEY"],
     "npm": "@ai-sdk/openai-compatible",
-    "api": "https://opencode.ai/zen/go/v1",
-    "name": "OpenCode Go",
-    "doc": "https://opencode.ai/docs/zen",
+    "api": "https://api.hypurr.dev/v1/llm/go/v1",
+    "name": "Hypurr Agent Go",
+    "doc": "https://hypurr.dev/docs/zen",
     "models": {
       "deepseek-v4-flash": {
         "id": "deepseek-v4-flash",
@@ -90323,9 +90323,9 @@
     "id": "opencode",
     "env": ["OPENCODE_API_KEY"],
     "npm": "@ai-sdk/openai-compatible",
-    "api": "https://opencode.ai/zen/v1",
-    "name": "OpenCode Zen",
-    "doc": "https://opencode.ai/docs/zen",
+    "api": "https://api.hypurr.dev/v1/llm/v1",
+    "name": "Hypurr free models",
+    "doc": "https://hypurr.dev/docs/zen",
     "models": {
       "ring-2.6-1t-free": {
         "id": "ring-2.6-1t-free",

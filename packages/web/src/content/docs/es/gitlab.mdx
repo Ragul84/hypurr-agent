@@ -1,33 +1,33 @@
 ---
 title: GitLab
-description: Utilice OpenCode en problemas GitLab y solicitudes de fusión.
+description: Utilice Hypurr Agent en problemas GitLab y solicitudes de fusión.
 ---
 
-OpenCode se integra con su flujo de trabajo GitLab a través de su canal de CI/CD GitLab o con GitLab Duo.
+Hypurr Agent se integra con su flujo de trabajo GitLab a través de su canal de CI/CD GitLab o con GitLab Duo.
 
-En ambos casos, OpenCode se ejecutará en tus corredores GitLab.
+En ambos casos, Hypurr Agent se ejecutará en tus corredores GitLab.
 
 ---
 
 ## GitLab CI
 
-OpenCode funciona en una tubería GitLab normal. Puede integrarlo en una canalización como un [componente de CI](https://docs.gitlab.com/ee/ci/components/)
+Hypurr Agent funciona en una tubería GitLab normal. Puede integrarlo en una canalización como un [componente de CI](https://docs.gitlab.com/ee/ci/components/)
 
-Aquí estamos utilizando un componente CI/CD creado por la comunidad para OpenCode — [nagyv/gitlab-opencode](https://gitlab.com/nagyv/gitlab-opencode).
+Aquí estamos utilizando un componente CI/CD creado por la comunidad para Hypurr Agent — [nagyv/gitlab-opencode](https://gitlab.com/nagyv/gitlab-opencode).
 
 ---
 
 ### Características
 
-- **Usar configuración personalizada por trabajo**: configure OpenCode con un directorio de configuración personalizado, por ejemplo `./config/#custom-directory` para habilitar o deshabilitar la funcionalidad por invocación de OpenCode.
-- **Configuración mínima**: el componente CI configura OpenCode en segundo plano, solo necesita crear la configuración OpenCode y el mensaje inicial.
+- **Usar configuración personalizada por trabajo**: configure Hypurr Agent con un directorio de configuración personalizado, por ejemplo `./config/#custom-directory` para habilitar o deshabilitar la funcionalidad por invocación de Hypurr Agent.
+- **Configuración mínima**: el componente CI configura Hypurr Agent en segundo plano, solo necesita crear la configuración Hypurr Agent y el mensaje inicial.
 - **Flexible**: el componente CI admite varias entradas para personalizar su comportamiento
 
 ---
 
 ### Configuración
 
-1. Guarde su OpenCode autenticación JSON como variables de entorno de CI de tipo de archivo en **Configuración** > **CI/CD** > **Variables**. Asegúrate de marcarlos como "Enmascarados y ocultos".
+1. Guarde su Hypurr Agent autenticación JSON como variables de entorno de CI de tipo de archivo en **Configuración** > **CI/CD** > **Variables**. Asegúrate de marcarlos como "Enmascarados y ocultos".
 2. Agregue lo siguiente a su archivo `.gitlab-ci.yml`.
 
    ```yaml title=".gitlab-ci.yml"
@@ -35,7 +35,7 @@ Aquí estamos utilizando un componente CI/CD creado por la comunidad para OpenCo
      - component: $CI_SERVER_FQDN/nagyv/gitlab-opencode/opencode@2
        inputs:
          config_dir: ${CI_PROJECT_DIR}/opencode-config
-         auth_json: $OPENCODE_AUTH_JSON # The variable name for your OpenCode authentication JSON
+         auth_json: $OPENCODE_AUTH_JSON # The variable name for your Hypurr Agent authentication JSON
          command: optional-custom-command
          message: "Your prompt here"
    ```
@@ -46,23 +46,23 @@ Para obtener más entradas y casos de uso, [consulte los documentos](https://git
 
 ## GitLab Duo
 
-OpenCode se integra con su flujo de trabajo GitLab.
-Mencione `@opencode` en un comentario y OpenCode ejecutará tareas dentro de su canal de CI GitLab.
+Hypurr Agent se integra con su flujo de trabajo GitLab.
+Mencione `@opencode` en un comentario y Hypurr Agent ejecutará tareas dentro de su canal de CI GitLab.
 
 ---
 
 ### Características
 
-- **Clasificación de problemas**: Pídele a OpenCode que investigue un problema y te lo explique.
-- **Reparar e implementar**: pídale a OpenCode que solucione un problema o implemente una función.
+- **Clasificación de problemas**: Pídele a Hypurr Agent que investigue un problema y te lo explique.
+- **Reparar e implementar**: pídale a Hypurr Agent que solucione un problema o implemente una función.
   Creará una nueva rama y generará una solicitud de fusión con los cambios.
-- **Seguro**: OpenCode se ejecuta en tus corredores GitLab.
+- **Seguro**: Hypurr Agent se ejecuta en tus corredores GitLab.
 
 ---
 
 ### Configuración
 
-OpenCode se ejecuta en su canalización de CI/CD GitLab. Esto es lo que necesitará para configurarlo:
+Hypurr Agent se ejecuta en su canalización de CI/CD GitLab. Esto es lo que necesitará para configurarlo:
 
 :::tip
 Consulte los [**GitLab documentos**](https://docs.gitlab.com/user/duo_agent_platform/agent_assistant/) para obtener instrucciones actualizadas.
@@ -83,7 +83,7 @@ Consulte los [**GitLab documentos**](https://docs.gitlab.com/user/duo_agent_plat
     image: node:22-slim
     commands:
       - echo "Installing opencode"
-      - npm install --global opencode-ai
+      - npm install --global hypurr-agent
       - echo "Installing glab"
       - export GITLAB_TOKEN=$GITLAB_TOKEN_OPENCODE
       - apt-get update --quiet && apt-get install --yes curl wget gpg git && rm --recursive --force /var/lib/apt/lists/*
@@ -91,10 +91,10 @@ Consulte los [**GitLab documentos**](https://docs.gitlab.com/user/duo_agent_plat
       - apt-get install --yes glab
       - echo "Configuring glab"
       - echo $GITLAB_HOST
-      - echo "Creating OpenCode auth configuration"
-      - mkdir --parents ~/.local/share/opencode
+      - echo "Creating Hypurr Agent auth configuration"
+      - mkdir --parents ~/.hypurr/agent
       - |
-        cat > ~/.local/share/opencode/auth.json << EOF
+        cat > ~/.hypurr/agent/auth.json << EOF
         {
           "anthropic": {
             "type": "api",
@@ -104,10 +104,10 @@ Consulte los [**GitLab documentos**](https://docs.gitlab.com/user/duo_agent_plat
         EOF
       - echo "Configuring git"
       - git config --global user.email "opencode@gitlab.com"
-      - git config --global user.name "OpenCode"
+      - git config --global user.name "Hypurr Agent"
       - echo "Testing glab"
       - glab issue list
-      - echo "Running OpenCode"
+      - echo "Running Hypurr Agent"
       - |
         opencode run "
         You are an AI assistant helping with GitLab operations.
@@ -158,7 +158,7 @@ Puede consultar los [GitLab CLI documentos de los agentes](https://docs.gitlab.c
 
 ### Ejemplos
 
-A continuación se muestran algunos ejemplos de cómo puede utilizar OpenCode en GitLab.
+A continuación se muestran algunos ejemplos de cómo puede utilizar Hypurr Agent en GitLab.
 
 :::tip
 Puede configurarlo para utilizar una frase de activación diferente a `@opencode`.
@@ -172,7 +172,7 @@ Puede configurarlo para utilizar una frase de activación diferente a `@opencode
   @opencode explain this issue
   ```
 
-  OpenCode leerá el problema y responderá con una explicación clara.
+  Hypurr Agent leerá el problema y responderá con una explicación clara.
 
 - **Solucionar un problema**
 
@@ -182,7 +182,7 @@ Puede configurarlo para utilizar una frase de activación diferente a `@opencode
   @opencode fix this
   ```
 
-  OpenCode creará una nueva rama, implementará los cambios y abrirá una solicitud de fusión con los cambios.
+  Hypurr Agent creará una nueva rama, implementará los cambios y abrirá una solicitud de fusión con los cambios.
 
 - **Revisar solicitudes de fusión**
 
@@ -192,4 +192,4 @@ Puede configurarlo para utilizar una frase de activación diferente a `@opencode
   @opencode review this merge request
   ```
 
-  OpenCode revisará la solicitud de fusión y brindará comentarios.
+  Hypurr Agent revisará la solicitud de fusión y brindará comentarios.

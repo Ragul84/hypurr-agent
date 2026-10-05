@@ -170,7 +170,7 @@ const RECORDED_SCENARIOS = [
     config: (model) =>
       providerConfig({
         providerID: ProviderV2.ID.opencode,
-        name: "OpenCode Zen",
+        name: "Hypurr free models",
         env: ["OPENCODE_CONSOLE_TOKEN"],
         npm: "@ai-sdk/openai-compatible",
         api: zenURL(process.env.OPENCODE_RECORD_ZEN_CONNECTION ?? "fixture"),
@@ -290,8 +290,8 @@ function recordedNativeLLMLayer(scenario: RecordedScenario) {
 const writeConfig = (directory: string, scenario: RecordedScenario, model: ModelsDev.Provider["models"][string]) =>
   Effect.promise(() =>
     Bun.write(
-      path.join(directory, "opencode.json"),
-      JSON.stringify({ $schema: "https://opencode.ai/config.json", ...scenario.config(model) }),
+      path.join(directory, "hypurr-agent.json"),
+      JSON.stringify({ $schema: "https://hypurr.dev/config.json", ...scenario.config(model) }),
     ),
   )
 

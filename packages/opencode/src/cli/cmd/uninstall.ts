@@ -129,10 +129,10 @@ async function showRemovalSummary(targets: RemovalTargets, method: Installation.
 
   if (method !== "curl" && method !== "unknown") {
     const cmds: Record<string, string> = {
-      npm: "npm uninstall -g opencode-ai",
-      pnpm: "pnpm uninstall -g opencode-ai",
-      bun: "bun remove -g opencode-ai",
-      yarn: "yarn global remove opencode-ai",
+      npm: "npm uninstall -g hypurr-agent",
+      pnpm: "pnpm uninstall -g hypurr-agent",
+      bun: "bun remove -g hypurr-agent",
+      yarn: "yarn global remove hypurr-agent",
       brew: "brew uninstall opencode",
       choco: "choco uninstall opencode",
       scoop: "scoop uninstall opencode",
@@ -180,10 +180,10 @@ async function executeUninstall(method: Installation.Method, targets: RemovalTar
 
   if (method !== "curl" && method !== "unknown") {
     const cmds: Record<string, string[]> = {
-      npm: ["npm", "uninstall", "-g", "opencode-ai"],
-      pnpm: ["pnpm", "uninstall", "-g", "opencode-ai"],
-      bun: ["bun", "remove", "-g", "opencode-ai"],
-      yarn: ["yarn", "global", "remove", "opencode-ai"],
+      npm: ["npm", "uninstall", "-g", "hypurr-agent"],
+      pnpm: ["pnpm", "uninstall", "-g", "hypurr-agent"],
+      bun: ["bun", "remove", "-g", "hypurr-agent"],
+      yarn: ["yarn", "global", "remove", "hypurr-agent"],
       brew: ["brew", "uninstall", "opencode"],
       choco: ["choco", "uninstall", "opencode"],
       scoop: ["scoop", "uninstall", "opencode"],
@@ -215,7 +215,7 @@ async function executeUninstall(method: Installation.Method, targets: RemovalTar
     prompts.log.info(`  rm "${targets.binary}"`)
 
     const binDir = path.dirname(targets.binary)
-    if (binDir.includes(".opencode")) {
+    if (binDir.includes(".hypurr")) {
       prompts.log.info(`  rmdir "${binDir}" 2>/dev/null`)
     }
   }
@@ -266,7 +266,7 @@ async function getShellConfigFile(): Promise<string | null> {
     if (!exists) continue
 
     const content = await Filesystem.readText(file).catch(() => "")
-    if (content.includes("# opencode") || content.includes(".opencode/bin")) {
+    if (content.includes("# hypurr-agent") || content.includes(".hypurr/agent/bin")) {
       return file
     }
   }
@@ -284,21 +284,21 @@ async function cleanShellConfig(file: string) {
   for (const line of lines) {
     const trimmed = line.trim()
 
-    if (trimmed === "# opencode") {
+    if (trimmed === "# hypurr-agent") {
       skip = true
       continue
     }
 
     if (skip) {
       skip = false
-      if (trimmed.includes(".opencode/bin") || trimmed.includes("fish_add_path")) {
+      if (trimmed.includes(".hypurr/agent/bin") || trimmed.includes("fish_add_path")) {
         continue
       }
     }
 
     if (
-      (trimmed.startsWith("export PATH=") && trimmed.includes(".opencode/bin")) ||
-      (trimmed.startsWith("fish_add_path") && trimmed.includes(".opencode"))
+      (trimmed.startsWith("export PATH=") && trimmed.includes(".hypurr/agent/bin")) ||
+      (trimmed.startsWith("fish_add_path") && trimmed.includes(".hypurr"))
     ) {
       continue
     }

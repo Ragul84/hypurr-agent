@@ -35,7 +35,7 @@ function resourceAttributes() {
 
 export function resource(): { serviceName: string; serviceVersion: string; attributes: Record<string, string> } {
   return {
-    serviceName: "opencode",
+    serviceName: "hypurr-agent",
     serviceVersion: InstallationVersion,
     attributes: {
       ...resourceAttributes(),

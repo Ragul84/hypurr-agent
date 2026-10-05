@@ -3,11 +3,11 @@
  */
 export const config = {
   // Base URL
-  baseUrl: "https://opencode.ai",
+  baseUrl: "https://hypurr.dev",
 
   // GitHub
   github: {
-    repoUrl: "https://github.com/anomalyco/opencode",
+    repoUrl: "https://github.com/Ragul84/hypurr-agent",
     starsFormatted: {
       compact: "195K",
       full: "195,000",

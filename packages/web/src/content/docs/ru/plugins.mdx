@@ -20,7 +20,7 @@ description: Напишите свои собственные плагины д�
 Поместите файлы JavaScript или TypeScript в каталог плагина.
 
 - `.opencode/plugins/` – плагины уровня проекта.
-- `~/.config/opencode/plugins/` — глобальные плагины
+- `~/.hypurr/agent/config/plugins/` — глобальные плагины
 
 Файлы в этих каталогах автоматически загружаются при запуске.
 
@@ -30,9 +30,9 @@ description: Напишите свои собственные плагины д�
 
 Укажите пакеты npm в файле конфигурации.
 
-```json title="opencode.json"
+```json title="hypurr-agent.json"
 {
-  "$schema": "https://opencode.ai/config.json",
+  "$schema": "https://hypurr.dev/config.json",
   "plugin": ["opencode-helicone-session", "opencode-wakatime", "@my-org/custom-plugin"]
 }
 ```
@@ -55,9 +55,9 @@ description: Напишите свои собственные плагины д�
 
 Плагины загружаются из всех источников, и все хуки запускаются последовательно. Порядок загрузки следующий:
 
-1. Глобальная конфигурация (`~/.config/opencode/opencode.json`)
-2. Конфигурация проекта (`opencode.json`)
-3. Глобальный каталог плагинов (`~/.config/opencode/plugins/`)
+1. Глобальная конфигурация (`~/.hypurr/agent/config/hypurr-agent.json`)
+2. Конфигурация проекта (`hypurr-agent.json`)
+3. Глобальный каталог плагинов (`~/.hypurr/agent/config/plugins/`)
 4. Каталог плагинов проекта (`.opencode/plugins/`)
 
 Дубликаты пакетов npm с тем же именем и версией загружаются один раз. Однако локальный плагин и плагин npm со схожими именами загружаются отдельно.
@@ -128,7 +128,7 @@ export const MyPlugin = async ({ project, client, $, directory, worktree }) => {
 Для плагинов TypeScript вы можете импортировать типы из пакета плагина:
 
 ```ts title="my-plugin.ts" {1}
-import type { Plugin } from "@opencode-ai/plugin"
+import type { Plugin } from "@hypurr-agent/plugin"
 
 export const MyPlugin: Plugin = async ({ project, client, $, directory, worktree }) => {
   return {
@@ -280,7 +280,7 @@ export const InjectEnvPlugin = async () => {
 Плагины также могут добавлять в opencode собственные инструменты:
 
 ```ts title=".opencode/plugins/custom-tools.ts"
-import { type Plugin, tool } from "@opencode-ai/plugin"
+import { type Plugin, tool } from "@hypurr-agent/plugin"
 
 export const CustomToolsPlugin: Plugin = async (ctx) => {
   return {
@@ -327,7 +327,7 @@ export const MyPlugin = async ({ client }) => {
 }
 ```
 
-Уровни: `debug`, `info`, `warn`, `error`. Подробности см. в документации SDK](https://opencode.ai/docs/sdk).
+Уровни: `debug`, `info`, `warn`, `error`. Подробности см. в документации SDK](https://hypurr.dev/docs/sdk).
 
 ---
 
@@ -336,7 +336,7 @@ export const MyPlugin = async ({ client }) => {
 Настройте контекст, включаемый при сжатии сеанса:
 
 ```ts title=".opencode/plugins/compaction.ts"
-import type { Plugin } from "@opencode-ai/plugin"
+import type { Plugin } from "@hypurr-agent/plugin"
 
 export const CompactionPlugin: Plugin = async (ctx) => {
   return {
@@ -360,7 +360,7 @@ Include any state that should persist across compaction:
 Вы также можете полностью заменить запрос на уплотнение, установив `output.prompt`:
 
 ```ts title=".opencode/plugins/custom-compaction.ts"
-import type { Plugin } from "@opencode-ai/plugin"
+import type { Plugin } from "@hypurr-agent/plugin"
 
 export const CustomCompactionPlugin: Plugin = async (ctx) => {
   return {

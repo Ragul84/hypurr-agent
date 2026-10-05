@@ -3,7 +3,7 @@
 import { $ } from "bun"
 import fs from "fs/promises"
 
-const model = "opencode/deepseek-v4-flash"
+const model = "hypurr-agent/deepseek-v4-flash"
 
 interface PR {
   number: number

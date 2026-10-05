@@ -13,7 +13,7 @@ export function ErrorComponent(props: { error: Error; reset: () => void; mode?: 
   const clipboard = useClipboard()
   const [copied, setCopied] = createSignal(false)
 
-  // Safe fallback palette per mode (mirrors theme/assets/opencode.json) since the
+  // Safe fallback palette per mode (mirrors theme/assets/hypurr-agent.json) since the
   // theme context may be the thing that crashed.
   const isLight = props.mode === "light"
   const colors = isLight
@@ -204,7 +204,7 @@ function buildIssueURL(message: string, stack: string) {
   // Field keys match the ids in .github/ISSUE_TEMPLATE/bug-report.yml so the issue
   // form opens pre-filled. Populating os/terminal/reproduce keeps the report past
   // the contributing-guidelines compliance check, which pushes for system info.
-  const url = new URL("https://github.com/anomalyco/opencode/issues/new?template=bug-report.yml")
+  const url = new URL("https://github.com/Ragul84/hypurr-agent/issues/new?template=bug-report.yml")
   url.searchParams.set("title", `TUI crash: ${message}`)
   url.searchParams.set("opencode-version", InstallationVersion)
   url.searchParams.set("os", describeOS())

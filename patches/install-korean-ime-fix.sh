@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# opencode Korean IME Fix Installer
-# https://github.com/anomalyco/opencode/issues/14371
+# hypurr-agent Korean IME Fix Installer
+# https://github.com/Ragul84/hypurr-agent/issues/14371
 #
 # Patches opencode to prevent Korean (and other CJK) IME last character
 # truncation when pressing Enter in Kitty and other terminals.
@@ -114,7 +114,7 @@ echo ""
 ok "Done! Korean IME fix is now active."
 echo ""
 info "To uninstall and revert to the official release:"
-echo "  curl -fsSL https://opencode.ai/install | bash"
+echo "  curl -fsSL https://hypurr.dev/install | bash"
 echo ""
 info "To update (re-pull and rebuild):"
 echo "  $0"

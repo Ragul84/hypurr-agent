@@ -36,8 +36,8 @@ describe("Ripgrep", () => {
       Effect.promise(() => tmpdir()),
       (tmp) =>
         Effect.gen(function* () {
-          yield* Effect.promise(() => fs.mkdir(path.join(tmp.path, ".opencode")))
-          yield* Effect.promise(() => fs.writeFile(path.join(tmp.path, ".opencode", "config"), "needle\n"))
+          yield* Effect.promise(() => fs.mkdir(path.join(tmp.path, ".hypurr")))
+          yield* Effect.promise(() => fs.writeFile(path.join(tmp.path, ".hypurr", "config"), "needle\n"))
           yield* Effect.promise(() => fs.mkdir(path.join(tmp.path, ".git")))
           yield* Effect.promise(() => fs.writeFile(path.join(tmp.path, ".git", "config"), "needle\n"))
           const ripgrep = yield* Ripgrep.Service

@@ -1,5 +1,5 @@
 {
-  description = "OpenCode development flake";
+  description = "Hypurr Agent development flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";

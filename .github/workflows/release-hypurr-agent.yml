@@ -1,0 +1,73 @@
+name: Release Hypurr Agent
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version tag without v (e.g. 0.1.0)"
+        required: true
+        default: "0.1.0"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.5
+      - name: Install
+        run: bun install --frozen-lockfile || bun install
+      - name: Build release binaries
+        working-directory: packages/opencode
+        run: |
+          bun run build
+        env:
+          OPENCODE_VERSION: ${{ github.event.inputs.version || github.ref_name }}
+      - name: Package + digests
+        working-directory: packages/opencode
+        run: |
+          set -euo pipefail
+          VERSION="${{ github.event.inputs.version || github.ref_name }}"
+          VERSION="${VERSION#v}"
+          mkdir -p /tmp/release
+          cd dist
+          for dir in hypurr-agent-*; do
+            [ -d "$dir" ] || continue
+            # skip windows for now if present without zip tooling preference
+            case "$dir" in
+              *windows*) continue ;;
+            esac
+            if [[ "$dir" == *darwin* ]]; then
+              (cd "$dir" && zip -qr "/tmp/release/${dir}.zip" .)
+            else
+              tar -czf "/tmp/release/${dir}.tar.gz" -C "$dir" .
+            fi
+          done
+          cd /tmp/release
+          sha256sum *.tar.gz *.zip 2>/dev/null | tee SHA256SUMS || true
+          ls -la
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: hypurr-agent-binaries
+          path: /tmp/release/*
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.event.inputs.version || github.ref_name }}
+          name: Hypurr Agent ${{ github.event.inputs.version || github.ref_name }}
+          draft: true
+          files: /tmp/release/*
+          body: |
+            Hypurr Agent binaries (fork of OpenCode MIT).
+
+            See SHA256SUMS in the assets. Config/data: `~/.hypurr/agent`.
+            Default provider: Hypurr gateway (`HYPURR_GATEWAY_URL`, `HYPURR_API_KEY`).
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

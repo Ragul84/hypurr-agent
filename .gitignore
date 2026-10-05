@@ -20,7 +20,7 @@ ts-dist
 /result
 refs
 Session.vim
-/opencode.json
+/hypurr-agent.json
 a.out
 target
 .scripts
@@ -32,3 +32,6 @@ UPCOMING_CHANGELOG.md
 logs/
 *.bun-build
 tsconfig.tsbuildinfo
+
+packages/**/dist/
+node_modules/

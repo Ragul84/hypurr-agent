@@ -1,17 +1,17 @@
 <p align="center">
-  <a href="https://opencode.ai">
+  <a href="https://hypurr.dev">
     <picture>
       <source srcset="packages/console/app/src/asset/logo-ornate-dark.svg" media="(prefers-color-scheme: dark)">
       <source srcset="packages/console/app/src/asset/logo-ornate-light.svg" media="(prefers-color-scheme: light)">
-      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="OpenCode logo">
+      <img src="packages/console/app/src/asset/logo-ornate-light.svg" alt="Hypurr Agent logo">
     </picture>
   </a>
 </p>
-<p align="center">OpenCode je open source AI agent za programiranje.</p>
+<p align="center">Hypurr Agent je open source AI agent za programiranje.</p>
 <p align="center">
-  <a href="https://opencode.ai/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
-  <a href="https://www.npmjs.com/package/opencode-ai"><img alt="npm" src="https://img.shields.io/npm/v/opencode-ai?style=flat-square" /></a>
-  <a href="https://github.com/anomalyco/opencode/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/anomalyco/opencode/publish.yml?style=flat-square&branch=dev" /></a>
+  <a href="https://hypurr.dev/discord"><img alt="Discord" src="https://img.shields.io/discord/1391832426048651334?style=flat-square&label=discord" /></a>
+  <a href="https://www.npmjs.com/package/hypurr-agent"><img alt="npm" src="https://img.shields.io/npm/v/hypurr-agent?style=flat-square" /></a>
+  <a href="https://github.com/Ragul84/hypurr-agent/actions/workflows/publish.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/Ragul84/hypurr-agent/publish.yml?style=flat-square&branch=dev" /></a>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
   <a href="README.vi.md">Tiếng Việt</a>
 </p>
 
-[![OpenCode Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://opencode.ai)
+[![Hypurr Agent Terminal UI](packages/web/src/assets/lander/screenshot.png)](https://hypurr.dev)
 
 ---
 
@@ -47,18 +47,18 @@
 
 ```bash
 # YOLO
-curl -fsSL https://opencode.ai/install | bash
+curl -fsSL https://hypurr.dev/install | bash
 
 # Package manageri
-npm i -g opencode-ai@latest        # ili bun/pnpm/yarn
+npm i -g hypurr-agent@latest        # ili bun/pnpm/yarn
 scoop install opencode             # Windows
 choco install opencode             # Windows
-brew install anomalyco/tap/opencode # macOS i Linux (preporučeno, uvijek ažurno)
+brew install ragul84/tap/hypurr-agent # macOS i Linux (preporučeno, uvijek ažurno)
 brew install opencode              # macOS i Linux (zvanična brew formula, rjeđe se ažurira)
 sudo pacman -S opencode            # Arch Linux (Stable)
 paru -S opencode-bin               # Arch Linux (Latest from AUR)
 mise use -g opencode               # Bilo koji OS
-nix run nixpkgs#opencode           # ili github:anomalyco/opencode za najnoviji dev branch
+nix run nixpkgs#opencode           # ili github:Ragul84/hypurr-agent za najnoviji dev branch
 ```
 
 > [!TIP]
@@ -66,7 +66,7 @@ nix run nixpkgs#opencode           # ili github:anomalyco/opencode za najnoviji 
 
 ### Desktop aplikacija (BETA)
 
-OpenCode je dostupan i kao desktop aplikacija. Preuzmi je direktno sa [stranice izdanja](https://github.com/anomalyco/opencode/releases) ili sa [opencode.ai/download](https://opencode.ai/download).
+Hypurr Agent je dostupan i kao desktop aplikacija. Preuzmi je direktno sa [stranice izdanja](https://github.com/Ragul84/hypurr-agent/releases) ili sa [opencode.ai/download](https://hypurr.dev/download).
 
 | Platforma             | Preuzimanje                        |
 | --------------------- | ---------------------------------- |
@@ -89,17 +89,17 @@ Instalacijska skripta koristi sljedeći redoslijed prioriteta za putanju instala
 1. `$OPENCODE_INSTALL_DIR` - Prilagođeni instalacijski direktorij
 2. `$XDG_BIN_DIR` - Putanja usklađena sa XDG Base Directory specifikacijom
 3. `$HOME/bin` - Standardni korisnički bin direktorij (ako postoji ili se može kreirati)
-4. `$HOME/.opencode/bin` - Podrazumijevana rezervna lokacija
+4. `$HOME/.hypurr/agent/bin` - Podrazumijevana rezervna lokacija
 
 ```bash
 # Primjeri
-OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://opencode.ai/install | bash
-XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://opencode.ai/install | bash
+OPENCODE_INSTALL_DIR=/usr/local/bin curl -fsSL https://hypurr.dev/install | bash
+XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://hypurr.dev/install | bash
 ```
 
 ### Agenti
 
-OpenCode uključuje dva ugrađena agenta između kojih možeš prebacivati tasterom `Tab`.
+Hypurr Agent uključuje dva ugrađena agenta između kojih možeš prebacivati tasterom `Tab`.
 
 - **build** - Podrazumijevani agent sa punim pristupom za razvoj
 - **plan** - Agent samo za čitanje za analizu i istraživanje koda
@@ -110,19 +110,19 @@ OpenCode uključuje dva ugrađena agenta između kojih možeš prebacivati taste
 Uključen je i **general** pod-agent za složene pretrage i višekoračne zadatke.
 Koristi se interno i može se pozvati pomoću `@general` u porukama.
 
-Saznaj više o [agentima](https://opencode.ai/docs/agents).
+Saznaj više o [agentima](https://hypurr.dev/docs/agents).
 
 ### Dokumentacija
 
-Za više informacija o konfiguraciji OpenCode-a, [**pogledaj dokumentaciju**](https://opencode.ai/docs).
+Za više informacija o konfiguraciji Hypurr Agent-a, [**pogledaj dokumentaciju**](https://hypurr.dev/docs).
 
 ### Doprinosi
 
-Ako želiš doprinositi OpenCode-u, pročitaj [upute za doprinošenje](./CONTRIBUTING.md) prije slanja pull requesta.
+Ako želiš doprinositi Hypurr Agent-u, pročitaj [upute za doprinošenje](./CONTRIBUTING.md) prije slanja pull requesta.
 
-### Gradnja na OpenCode-u
+### Gradnja na Hypurr Agent-u
 
-Ako radiš na projektu koji je povezan s OpenCode-om i koristi "opencode" kao dio naziva, npr. "opencode-dashboard" ili "opencode-mobile", dodaj napomenu u svoj README da projekat nije napravio OpenCode tim i da nije povezan s nama.
+Ako radiš na projektu koji je povezan s Hypurr Agent-om i koristi "opencode" kao dio naziva, npr. "opencode-dashboard" ili "opencode-mobile", dodaj napomenu u svoj README da projekat nije napravio Hypurr Agent tim i da nije povezan s nama.
 
 ---
 

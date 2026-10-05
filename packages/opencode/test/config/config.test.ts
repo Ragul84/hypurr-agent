@@ -112,7 +112,7 @@ const layer = configLayer()
 const it = testEffect(layer)
 const configIt = (options?: Parameters<typeof configLayer>[0]) => testEffect(configLayer(options))
 
-const schemaConfig = (config: object) => ({ $schema: "https://opencode.ai/config.json", ...config })
+const schemaConfig = (config: object) => ({ $schema: "https://hypurr.dev/config.json", ...config })
 
 const provideCurrentInstance = <A, E, R>(effect: Effect.Effect<A, E, R>, ctx: InstanceContext) =>
   effect.pipe(Effect.provideService(InstanceRef, ctx))
@@ -149,13 +149,13 @@ afterEach(async () => {
 })
 
 const writeManagedSettingsEffect = (settings: object, filename?: string) =>
-  FSUtil.use.writeWithDirs(path.join(managedConfigDir, filename ?? "opencode.json"), JSON.stringify(settings))
+  FSUtil.use.writeWithDirs(path.join(managedConfigDir, filename ?? "hypurr-agent.json"), JSON.stringify(settings))
 
-async function writeConfig(dir: string, config: object, name = "opencode.json") {
+async function writeConfig(dir: string, config: object, name = "hypurr-agent.json") {
   await Filesystem.write(path.join(dir, name), JSON.stringify(config))
 }
 
-const writeConfigEffect = (dir: string, config: object, name = "opencode.json") =>
+const writeConfigEffect = (dir: string, config: object, name = "hypurr-agent.json") =>
   FSUtil.use.writeWithDirs(path.join(dir, name), JSON.stringify(config))
 
 const withInstanceDir = <A, E, R>(dir: string, effect: Effect.Effect<A, E, R>) =>
@@ -204,7 +204,7 @@ const withConfigTree = <A, E, R>(
       [
         input.global ? writeConfigEffect(global, schemaConfig(input.global)) : undefined,
         input.project ? writeConfigEffect(directory, schemaConfig(input.project)) : undefined,
-        input.local ? writeConfigEffect(path.join(directory, ".opencode"), schemaConfig(input.local)) : undefined,
+        input.local ? writeConfigEffect(path.join(directory, ".hypurr"), schemaConfig(input.local)) : undefined,
       ].filter((effect): effect is Effect.Effect<void, FSUtil.Error, FSUtil.Service> => effect !== undefined),
       { concurrency: "unbounded" },
     )
@@ -270,7 +270,7 @@ async function check(map: (dir: string) => string) {
   await clear()
   try {
     await writeConfig(globalTmp.path, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       snapshot: false,
     })
     await withTestInstance({
@@ -315,8 +315,8 @@ it.effect("creates global jsonc config with schema when no global configs exist"
     Effect.gen(function* () {
       yield* Config.use.get().pipe(provideInstanceEffect(dir))
 
-      const content = yield* FSUtil.use.readFileString(path.join(dir, "opencode.jsonc"))
-      expect(content).toContain('"$schema": "https://opencode.ai/config.json"')
+      const content = yield* FSUtil.use.readFileString(path.join(dir, "hypurr-agent.jsonc"))
+      expect(content).toContain('"$schema": "https://hypurr.dev/config.json"')
     }).pipe(Effect.provide(testInstanceStoreLayer), Effect.provide(LayerNode.compile(CrossSpawnSpawner.node))),
   ),
 )
@@ -331,7 +331,7 @@ it.effect("does not create global config when OPENCODE_CONFIG_DIR is set", () =>
         Effect.gen(function* () {
           yield* Config.use.get().pipe(provideInstanceEffect(dir))
 
-          expect(yield* FSUtil.use.existsSafe(path.join(dir, "opencode.jsonc"))).toBe(false)
+          expect(yield* FSUtil.use.existsSafe(path.join(dir, "hypurr-agent.jsonc"))).toBe(false)
         }).pipe(Effect.provide(testInstanceStoreLayer), Effect.provide(LayerNode.compile(CrossSpawnSpawner.node))),
       ),
     )
@@ -362,7 +362,7 @@ it.instance("updates config and preserves empty shell sentinel", () =>
     const test = yield* TestInstance
     yield* writeConfigEffect(
       test.directory,
-      { $schema: "https://opencode.ai/config.json", shell: "bash" },
+      { $schema: "https://hypurr.dev/config.json", shell: "bash" },
       "config.json",
     )
 
@@ -378,18 +378,18 @@ it.effect("updates global config and omits empty shell key in json", () =>
     Effect.gen(function* () {
       yield* Config.use.updateGlobal({ shell: "" })
 
-      const writtenConfig = yield* FSUtil.use.readJson(path.join(dir, "opencode.json"))
+      const writtenConfig = yield* FSUtil.use.readJson(path.join(dir, "hypurr-agent.json"))
       expect(writtenConfig).not.toHaveProperty("shell")
     }),
   ),
 )
 
 it.effect("updates global config and omits empty shell key in jsonc", () =>
-  withGlobalConfig({ config: { shell: "bash", model: "test/model" }, name: "opencode.jsonc" }, ({ dir }) =>
+  withGlobalConfig({ config: { shell: "bash", model: "test/model" }, name: "hypurr-agent.jsonc" }, ({ dir }) =>
     Effect.gen(function* () {
       yield* Config.use.updateGlobal({ shell: "" })
 
-      const file = path.join(dir, "opencode.jsonc")
+      const file = path.join(dir, "hypurr-agent.jsonc")
       const writtenConfig = yield* FSUtil.use.readFileString(file)
       const parsed = ConfigParse.schema(ConfigV1.Info, ConfigParse.jsonc(writtenConfig, file), file)
       expect(writtenConfig).not.toContain('"shell"')
@@ -425,7 +425,7 @@ it.effect("logs global update diagnostics once without exposing values", () =>
           [
             "configuration compatibility diagnostic",
             expect.objectContaining({
-              source: path.join(dir, "opencode.json"),
+              source: path.join(dir, "hypurr-agent.json"),
               kind: "unsupported",
               path: ["providers"],
             }),
@@ -485,7 +485,7 @@ for (const input of projectInputs) {
   )
 }
 
-for (const name of ["opencode.json", "opencode.jsonc"]) {
+for (const name of ["hypurr-agent.json", "hypurr-agent.jsonc"]) {
   it.live(`rejects updating ${name} with native permissions without writing it`, () =>
     withGlobalConfig(
       { name, config: { permissions: [{ action: "read", resource: "secret-resource", effect: "deny" }] } },
@@ -573,7 +573,7 @@ it.effect("rejects native project permissions even with inherited V1 rules", () 
       if (Exit.isFailure(exit))
         expect(Cause.squash(exit.cause)).toMatchObject({
           data: {
-            path: expect.stringContaining(path.join("project", "opencode.json")),
+            path: expect.stringContaining(path.join("project", "hypurr-agent.json")),
             issues: [
               { path: ["permissions"], message: expect.stringContaining('Use V1 "permission" rules or run opencode2') },
               { path: ["agents", "reviewer", "permissions"], message: expect.stringContaining("not supported") },
@@ -623,7 +623,7 @@ it.instance("ignores legacy tui keys in opencode config", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       model: "test/model",
       theme: "legacy",
       tui: { scroll_speed: 4 },
@@ -640,10 +640,10 @@ it.instance("loads JSONC config file", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* FSUtil.use.writeWithDirs(
-      path.join(test.directory, "opencode.jsonc"),
+      path.join(test.directory, "hypurr-agent.jsonc"),
       `{
         // This is a comment
-        "$schema": "https://opencode.ai/config.json",
+        "$schema": "https://hypurr.dev/config.json",
         "model": "test/model",
         "username": "testuser"
       }`,
@@ -660,14 +660,14 @@ it.instance("jsonc overrides json in the same directory", () =>
     yield* writeConfigEffect(
       test.directory,
       {
-        $schema: "https://opencode.ai/config.json",
+        $schema: "https://hypurr.dev/config.json",
         model: "base",
         username: "base",
       },
-      "opencode.jsonc",
+      "hypurr-agent.jsonc",
     )
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       model: "override",
     })
     const config = yield* Config.use.get()
@@ -683,7 +683,7 @@ it.instance("handles environment variable substitution", () =>
     Effect.gen(function* () {
       const test = yield* TestInstance
       yield* writeConfigEffect(test.directory, {
-        $schema: "https://opencode.ai/config.json",
+        $schema: "https://hypurr.dev/config.json",
         username: "{env:TEST_VAR}",
       })
       const config = yield* Config.use.get()
@@ -700,14 +700,14 @@ it.instance("preserves env variables when adding $schema to config", () =>
       const test = yield* TestInstance
       // Config without $schema - should trigger auto-add
       yield* FSUtil.use.writeWithDirs(
-        path.join(test.directory, "opencode.json"),
+        path.join(test.directory, "hypurr-agent.json"),
         JSON.stringify({ username: "{env:PRESERVE_VAR}" }),
       )
       const config = yield* Config.use.get()
       expect(config.username).toBe("secret_value")
 
       // Read the file to verify the env variable was preserved
-      const content = yield* FSUtil.use.readFileString(path.join(test.directory, "opencode.json"))
+      const content = yield* FSUtil.use.readFileString(path.join(test.directory, "hypurr-agent.json"))
       expect(content).toContain("{env:PRESERVE_VAR}")
       expect(content).not.toContain("secret_value")
       expect(content).toContain("$schema")
@@ -720,7 +720,7 @@ it.instance("handles file inclusion substitution", () =>
     const test = yield* TestInstance
     yield* FSUtil.use.writeWithDirs(path.join(test.directory, "included.txt"), "test-user")
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       username: "{file:included.txt}",
     })
     const config = yield* Config.use.get()
@@ -733,7 +733,7 @@ it.instance("handles file inclusion with replacement tokens", () =>
     const test = yield* TestInstance
     yield* FSUtil.use.writeWithDirs(path.join(test.directory, "included.md"), "const out = await Bun.$`echo hi`")
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       username: "{file:included.md}",
     })
     const config = yield* Config.use.get()
@@ -788,7 +788,7 @@ it.instance("validates config schema and throws on invalid values", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       model: 42,
     })
     const exit = yield* Config.use.get().pipe(Effect.exit)
@@ -799,7 +799,7 @@ it.instance("validates config schema and throws on invalid values", () =>
 it.instance("throws error for invalid JSON", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
-    yield* FSUtil.use.writeWithDirs(path.join(test.directory, "opencode.json"), "{ invalid json }")
+    yield* FSUtil.use.writeWithDirs(path.join(test.directory, "hypurr-agent.json"), "{ invalid json }")
     const exit = yield* Config.use.get().pipe(Effect.exit)
     expect(Exit.isFailure(exit)).toBe(true)
   }),
@@ -809,7 +809,7 @@ it.instance("handles agent configuration", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       agent: {
         test_agent: {
           model: "test/model",
@@ -833,7 +833,7 @@ it.instance("treats agent variant as model-scoped setting (not provider option)"
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       agent: {
         test_agent: {
           model: "openai/gpt-5.2",
@@ -857,7 +857,7 @@ it.instance("handles command configuration", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       command: {
         test_command: {
           template: "test template",
@@ -879,7 +879,7 @@ it.instance("migrates autoshare to share field", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       autoshare: true,
     })
     const config = yield* Config.use.get()
@@ -892,7 +892,7 @@ it.instance("migrates mode field to agent field", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       mode: {
         test_mode: {
           model: "test/model",
@@ -915,7 +915,7 @@ it.instance("accepts the deprecated reference field", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       reference: {
         local: { path: "../library" },
         sdk: { repository: "github.com/example/sdk", branch: "main" },
@@ -935,7 +935,7 @@ it.instance("loads config from .opencode directory", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* FSUtil.use.writeWithDirs(
-      path.join(test.directory, ".opencode", "agent", "test.md"),
+      path.join(test.directory, ".hypurr", "agent", "test.md"),
       `---
 model: test/model
 ---
@@ -957,7 +957,7 @@ it.instance("agent markdown permission config preserves user key order", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* FSUtil.use.writeWithDirs(
-      path.join(test.directory, ".opencode", "agent", "ordered.md"),
+      path.join(test.directory, ".hypurr", "agent", "ordered.md"),
       `---
 permission:
   bash: allow
@@ -976,7 +976,7 @@ it.instance("loads agents from .opencode/agents (plural)", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* FSUtil.use.writeWithDirs(
-      path.join(test.directory, ".opencode", "agents", "helper.md"),
+      path.join(test.directory, ".hypurr", "agents", "helper.md"),
       `---
 model: test/model
 mode: subagent
@@ -985,7 +985,7 @@ Helper agent prompt`,
     )
 
     yield* FSUtil.use.writeWithDirs(
-      path.join(test.directory, ".opencode", "agents", "nested", "child.md"),
+      path.join(test.directory, ".hypurr", "agents", "nested", "child.md"),
       `---
 model: test/model
 mode: subagent
@@ -1015,7 +1015,7 @@ it.instance("loads commands from .opencode/command (singular)", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* FSUtil.use.writeWithDirs(
-      path.join(test.directory, ".opencode", "command", "hello.md"),
+      path.join(test.directory, ".hypurr", "command", "hello.md"),
       `---
 description: Test command
 ---
@@ -1023,7 +1023,7 @@ Hello from singular command`,
     )
 
     yield* FSUtil.use.writeWithDirs(
-      path.join(test.directory, ".opencode", "command", "nested", "child.md"),
+      path.join(test.directory, ".hypurr", "command", "nested", "child.md"),
       `---
 description: Nested command
 ---
@@ -1048,7 +1048,7 @@ it.instance("loads commands from .opencode/commands (plural)", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* FSUtil.use.writeWithDirs(
-      path.join(test.directory, ".opencode", "commands", "hello.md"),
+      path.join(test.directory, ".hypurr", "commands", "hello.md"),
       `---
 description: Test command
 ---
@@ -1056,7 +1056,7 @@ Hello from plural commands`,
     )
 
     yield* FSUtil.use.writeWithDirs(
-      path.join(test.directory, ".opencode", "commands", "nested", "child.md"),
+      path.join(test.directory, ".hypurr", "commands", "nested", "child.md"),
       `---
 description: Nested command
 ---
@@ -1228,7 +1228,7 @@ it.instance("does not error when only custom agent is a subagent", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* FSUtil.use.writeWithDirs(
-      path.join(test.directory, ".opencode", "agent", "helper.md"),
+      path.join(test.directory, ".hypurr", "agent", "helper.md"),
       `---
 model: test/model
 mode: subagent
@@ -1325,7 +1325,7 @@ it.instance("migrates legacy tools config to permissions - allow", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       agent: { test: { tools: { bash: true, read: true } } },
     })
 
@@ -1341,7 +1341,7 @@ it.instance("migrates legacy tools config to permissions - deny", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       agent: { test: { tools: { bash: false, webfetch: false } } },
     })
 
@@ -1357,7 +1357,7 @@ it.instance("migrates legacy write tool to edit permission", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       agent: { test: { tools: { write: true } } },
     })
 
@@ -1373,7 +1373,7 @@ it.instance(
   "managed settings override user settings",
   Effect.gen(function* () {
     yield* writeManagedSettingsEffect({
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       model: "managed/model",
       share: "disabled",
     })
@@ -1390,7 +1390,7 @@ it.instance(
   "managed settings override project settings",
   Effect.gen(function* () {
     yield* writeManagedSettingsEffect({
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       autoupdate: false,
       disabled_providers: ["openai"],
     })
@@ -1405,7 +1405,7 @@ it.instance(
 it.instance("managed jsonc settings override managed json settings", () =>
   Effect.gen(function* () {
     yield* writeManagedSettingsEffect({ model: "managed/json" })
-    yield* writeManagedSettingsEffect({ model: "managed/jsonc" }, "opencode.jsonc")
+    yield* writeManagedSettingsEffect({ model: "managed/jsonc" }, "hypurr-agent.jsonc")
 
     const config = yield* Config.use.get()
     expect(config.model).toBe("managed/jsonc")
@@ -1425,7 +1425,7 @@ it.instance("migrates legacy edit tool to edit permission", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       agent: { test: { tools: { edit: false } } },
     })
 
@@ -1438,7 +1438,7 @@ it.instance("migrates legacy patch tool to edit permission", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       agent: { test: { tools: { patch: true } } },
     })
 
@@ -1451,7 +1451,7 @@ it.instance("migrates mixed legacy tools config", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       agent: { test: { tools: { bash: true, write: true, read: false, webfetch: true } } },
     })
 
@@ -1469,7 +1469,7 @@ it.instance("merges legacy tools with existing permission config", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       agent: { test: { permission: { glob: "allow" }, tools: { bash: true } } },
     })
 
@@ -1487,7 +1487,7 @@ it.instance("permission config preserves user key order", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       permission: {
         "*": "deny",
         edit: "ask",
@@ -1543,7 +1543,7 @@ it.instance("project config can override MCP server enabled status", () =>
     const test = yield* TestInstance
     // Simulates a base config (like from remote .well-known) with disabled MCP.
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       mcp: {
         jira: {
           type: "remote",
@@ -1561,7 +1561,7 @@ it.instance("project config can override MCP server enabled status", () =>
     yield* writeConfigEffect(
       test.directory,
       {
-        $schema: "https://opencode.ai/config.json",
+        $schema: "https://hypurr.dev/config.json",
         mcp: {
           jira: {
             type: "remote",
@@ -1570,7 +1570,7 @@ it.instance("project config can override MCP server enabled status", () =>
           },
         },
       },
-      "opencode.jsonc",
+      "hypurr-agent.jsonc",
     )
 
     const config = yield* Config.use.get()
@@ -1591,7 +1591,7 @@ it.instance("MCP config deep merges preserving base config properties", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       mcp: {
         myserver: {
           type: "remote",
@@ -1606,7 +1606,7 @@ it.instance("MCP config deep merges preserving base config properties", () =>
     yield* writeConfigEffect(
       test.directory,
       {
-        $schema: "https://opencode.ai/config.json",
+        $schema: "https://hypurr.dev/config.json",
         mcp: {
           myserver: {
             type: "remote",
@@ -1615,7 +1615,7 @@ it.instance("MCP config deep merges preserving base config properties", () =>
           },
         },
       },
-      "opencode.jsonc",
+      "hypurr-agent.jsonc",
     )
 
     const config = yield* Config.use.get()
@@ -1634,7 +1634,7 @@ it.instance("local .opencode config can override MCP from project config", () =>
   Effect.gen(function* () {
     const test = yield* TestInstance
     yield* writeConfigEffect(test.directory, {
-      $schema: "https://opencode.ai/config.json",
+      $schema: "https://hypurr.dev/config.json",
       mcp: {
         docs: {
           type: "remote",
@@ -1643,11 +1643,11 @@ it.instance("local .opencode config can override MCP from project config", () =>
         },
       },
     })
-    yield* FSUtil.use.ensureDir(path.join(test.directory, ".opencode"))
+    yield* FSUtil.use.ensureDir(path.join(test.directory, ".hypurr"))
     yield* writeConfigEffect(
-      path.join(test.directory, ".opencode"),
+      path.join(test.directory, ".hypurr"),
       {
-        $schema: "https://opencode.ai/config.json",
+        $schema: "https://hypurr.dev/config.json",
         mcp: {
           docs: {
             type: "remote",
@@ -1656,7 +1656,7 @@ it.instance("local .opencode config can override MCP from project config", () =>
           },
         },
       },
-      "opencode.json",
+      "hypurr-agent.json",
     )
 
     const config = yield* Config.use.get()
@@ -1748,7 +1748,7 @@ test("remote well-known config can use FetchHttpClient layer", async () => {
 
 const templatedHeaderWellKnown = wellKnown({
   remoteConfig: {
-    url: "https://config.example.com/opencode.json",
+    url: "https://config.example.com/hypurr-agent.json",
     headers: { Authorization: "Bearer {env:TEST_TOKEN}" },
   },
   remote: {
@@ -1760,7 +1760,7 @@ templatedHeaderWellKnown.it.instance("wellknown remote_config supports templated
   Effect.gen(function* () {
     const config = yield* Config.use.get()
     expect(templatedHeaderWellKnown.seen.wellKnown).toBe("https://example.com/.well-known/opencode")
-    expect(templatedHeaderWellKnown.seen.remote).toBe("https://config.example.com/opencode.json")
+    expect(templatedHeaderWellKnown.seen.remote).toBe("https://config.example.com/hypurr-agent.json")
     expect(templatedHeaderWellKnown.seen.authorization).toBe("Bearer test-token")
     expect(config.mcp?.confluence?.enabled).toBe(true)
   }),
@@ -1770,7 +1770,7 @@ const remotePrecedenceWellKnown = wellKnown({
   config: {
     mcp: { confluence: { type: "remote", url: "https://confluence.example.com/mcp", enabled: false } },
   },
-  remoteConfig: { url: "https://config.example.com/{env:TEST_TOKEN}/opencode.json" },
+  remoteConfig: { url: "https://config.example.com/{env:TEST_TOKEN}/hypurr-agent.json" },
   remote: {
     config: { mcp: { confluence: { type: "remote", url: "https://confluence.example.com/mcp", enabled: true } } },
   },
@@ -1781,14 +1781,14 @@ remotePrecedenceWellKnown.it.instance(
   () =>
     Effect.gen(function* () {
       const config = yield* Config.use.get()
-      expect(remotePrecedenceWellKnown.seen.remote).toBe("https://config.example.com/test-token/opencode.json")
+      expect(remotePrecedenceWellKnown.seen.remote).toBe("https://config.example.com/test-token/hypurr-agent.json")
       expect(config.mcp?.confluence?.enabled).toBe(true)
     }),
 )
 
 const envIsolationWellKnown = wellKnown({
   remoteConfig: {
-    url: "https://config.example.com/opencode.json",
+    url: "https://config.example.com/hypurr-agent.json",
     headers: { Authorization: "Bearer {env:TEST_TOKEN}" },
   },
   remote: {
@@ -1812,7 +1812,7 @@ envIsolationWellKnown.it.instance(
 const nullConfigWellKnown = wellKnown({
   wellKnown: {
     config: null,
-    remote_config: { url: "https://config.example.com/opencode.json" },
+    remote_config: { url: "https://config.example.com/hypurr-agent.json" },
   },
   remote: {
     mcp: { confluence: { type: "remote", url: "https://confluence.example.com/mcp", enabled: true } },
@@ -1822,26 +1822,26 @@ const nullConfigWellKnown = wellKnown({
 nullConfigWellKnown.it.instance("wellknown config null is treated as absent", () =>
   Effect.gen(function* () {
     const config = yield* Config.use.get()
-    expect(nullConfigWellKnown.seen.remote).toBe("https://config.example.com/opencode.json")
+    expect(nullConfigWellKnown.seen.remote).toBe("https://config.example.com/hypurr-agent.json")
     expect(config.mcp?.confluence?.enabled).toBe(true)
   }),
 )
 
 const invalidRemoteWellKnown = wellKnown({
-  remoteConfig: { url: "https://config.example.com/opencode.json" },
+  remoteConfig: { url: "https://config.example.com/hypurr-agent.json" },
   remote: "not an object",
 })
 
 invalidRemoteWellKnown.it.instance("wellknown remote_config rejects non-object config responses", () =>
   Effect.gen(function* () {
     const exit = yield* Config.use.get().pipe(Effect.exit)
-    expect(invalidRemoteWellKnown.seen.remote).toBe("https://config.example.com/opencode.json")
+    expect(invalidRemoteWellKnown.seen.remote).toBe("https://config.example.com/hypurr-agent.json")
     expect(Exit.isFailure(exit)).toBe(true)
   }),
 )
 
 const loginPageWellKnown = wellKnown({
-  remoteConfig: { url: "https://config.example.com/opencode.json" },
+  remoteConfig: { url: "https://config.example.com/hypurr-agent.json" },
   remoteHtml: "<!DOCTYPE html><html><head><title>Sign in</title></head><body>Login required</body></html>",
 })
 
@@ -1850,7 +1850,7 @@ loginPageWellKnown.it.instance(
   () =>
     Effect.gen(function* () {
       const exit = yield* Config.use.get().pipe(Effect.exit)
-      expect(loginPageWellKnown.seen.remote).toBe("https://config.example.com/opencode.json")
+      expect(loginPageWellKnown.seen.remote).toBe("https://config.example.com/hypurr-agent.json")
       expect(Exit.isFailure(exit)).toBe(true)
       const error = Exit.isFailure(exit) ? Cause.squash(exit.cause) : undefined
       expect(NamedError.hasName(error, "ConfigRemoteAuthError")).toBe(true)
@@ -1861,7 +1861,7 @@ loginPageWellKnown.it.instance(
 describe("resolvePluginSpec", () => {
   test("keeps package specs unchanged", async () => {
     await using tmp = await tmpdir()
-    const file = path.join(tmp.path, "opencode.json")
+    const file = path.join(tmp.path, "hypurr-agent.json")
     expect(await ConfigPlugin.resolvePluginSpec("oh-my-opencode@2.4.3", file)).toBe("oh-my-opencode@2.4.3")
     expect(await ConfigPlugin.resolvePluginSpec("@scope/pkg", file)).toBe("@scope/pkg")
   })
@@ -1877,7 +1877,7 @@ describe("resolvePluginSpec", () => {
       },
     })
 
-    const file = path.join(tmp.path, "opencode.json")
+    const file = path.join(tmp.path, "hypurr-agent.json")
     const hit = await ConfigPlugin.resolvePluginSpec(".\\plugin", file)
     expect(ConfigPlugin.pluginSpecifier(hit)).toBe(pathToFileURL(path.join(tmp.path, "plugin", "index.ts")).href)
   })
@@ -1889,7 +1889,7 @@ describe("resolvePluginSpec", () => {
       },
     })
 
-    const file = path.join(tmp.path, "opencode.json")
+    const file = path.join(tmp.path, "hypurr-agent.json")
     const hit = await ConfigPlugin.resolvePluginSpec("./plugin.ts", file)
     expect(ConfigPlugin.pluginSpecifier(hit)).toBe(pathToFileURL(path.join(tmp.path, "plugin.ts")).href)
   })
@@ -1908,7 +1908,7 @@ describe("resolvePluginSpec", () => {
       },
     })
 
-    const file = path.join(tmp.path, "opencode.json")
+    const file = path.join(tmp.path, "hypurr-agent.json")
     const hit = await ConfigPlugin.resolvePluginSpec("./plugin", file)
     expect(ConfigPlugin.pluginSpecifier(hit)).toBe(pathToFileURL(path.join(tmp.path, "plugin")).href)
   })
@@ -1922,7 +1922,7 @@ describe("resolvePluginSpec", () => {
       },
     })
 
-    const file = path.join(tmp.path, "opencode.json")
+    const file = path.join(tmp.path, "hypurr-agent.json")
     const hit = await ConfigPlugin.resolvePluginSpec("./plugin", file)
     expect(ConfigPlugin.pluginSpecifier(hit)).toBe(pathToFileURL(path.join(tmp.path, "plugin", "index.ts")).href)
   })
@@ -1951,7 +1951,7 @@ describe("deduplicatePluginOrigins", () => {
   })
 
   test("keeps path plugins separate from package plugins", () => {
-    const plugins = ["oh-my-opencode@2.4.3", "file:///project/.opencode/plugin/oh-my-opencode.js"]
+    const plugins = ["oh-my-opencode@2.4.3", "file:///project/.hypurr/plugin/oh-my-opencode.js"]
 
     const result = dedupe(plugins)
 
@@ -1959,11 +1959,11 @@ describe("deduplicatePluginOrigins", () => {
   })
 
   test("deduplicates direct path plugins by exact spec", () => {
-    const plugins = ["file:///project/.opencode/plugin/demo.ts", "file:///project/.opencode/plugin/demo.ts"]
+    const plugins = ["file:///project/.hypurr/plugin/demo.ts", "file:///project/.hypurr/plugin/demo.ts"]
 
     const result = dedupe(plugins)
 
-    expect(result).toEqual(["file:///project/.opencode/plugin/demo.ts"])
+    expect(result).toEqual(["file:///project/.hypurr/plugin/demo.ts"])
   })
 
   test("preserves order of remaining plugins", () => {
@@ -1980,7 +1980,7 @@ describe("deduplicatePluginOrigins", () => {
       Effect.gen(function* () {
         const test = yield* TestInstance
         yield* FSUtil.use.writeWithDirs(
-          path.join(test.directory, ".opencode", "plugin", "my-plugin.js"),
+          path.join(test.directory, ".hypurr", "plugin", "my-plugin.js"),
           "export default {}",
         )
 
@@ -2015,7 +2015,7 @@ describe("OPENCODE_DISABLE_PROJECT_CONFIG", () => {
       Effect.gen(function* () {
         const test = yield* TestInstance
         yield* FSUtil.use.writeWithDirs(
-          path.join(test.directory, ".opencode", "command", "test-cmd.md"),
+          path.join(test.directory, ".hypurr", "command", "test-cmd.md"),
           "# Test Command\nThis is a test command.",
         )
         const directories = yield* Config.use.directories()
@@ -2094,7 +2094,7 @@ describe("OPENCODE_CONFIG_CONTENT token substitution", () => {
       withProcessEnv(
         "OPENCODE_CONFIG_CONTENT",
         JSON.stringify({
-          $schema: "https://opencode.ai/config.json",
+          $schema: "https://hypurr.dev/config.json",
           username: "{env:TEST_CONFIG_VAR}",
         }),
         Effect.gen(function* () {
@@ -2112,7 +2112,7 @@ describe("OPENCODE_CONFIG_CONTENT token substitution", () => {
       yield* withProcessEnv(
         "OPENCODE_CONFIG_CONTENT",
         JSON.stringify({
-          $schema: "https://opencode.ai/config.json",
+          $schema: "https://hypurr.dev/config.json",
           username: "{file:./api_key.txt}",
         }),
         Effect.gen(function* () {
@@ -2133,8 +2133,8 @@ test("parseManagedPlist strips MDM metadata keys", async () => {
       await ConfigManaged.parseManagedPlist(
         JSON.stringify({
           PayloadDisplayName: "OpenCode Managed",
-          PayloadIdentifier: "ai.opencode.managed.test",
-          PayloadType: "ai.opencode.managed",
+          PayloadIdentifier: "dev.hypurr.agent.managed.test",
+          PayloadType: "dev.hypurr.agent.managed",
           PayloadUUID: "AAAA-BBBB-CCCC",
           PayloadVersion: 1,
           _manualProfile: true,
@@ -2160,7 +2160,7 @@ test("parseManagedPlist parses server settings", async () => {
     ConfigParse.jsonc(
       await ConfigManaged.parseManagedPlist(
         JSON.stringify({
-          $schema: "https://opencode.ai/config.json",
+          $schema: "https://hypurr.dev/config.json",
           server: { hostname: "127.0.0.1", mdns: false },
           autoupdate: true,
         }),
@@ -2180,7 +2180,7 @@ test("parseManagedPlist parses permission rules", async () => {
     ConfigParse.jsonc(
       await ConfigManaged.parseManagedPlist(
         JSON.stringify({
-          $schema: "https://opencode.ai/config.json",
+          $schema: "https://hypurr.dev/config.json",
           permission: {
             "*": "ask",
             bash: { "*": "ask", "rm -rf *": "deny", "curl *": "deny" },
@@ -2210,7 +2210,7 @@ test("parseManagedPlist parses enabled_providers", async () => {
     ConfigParse.jsonc(
       await ConfigManaged.parseManagedPlist(
         JSON.stringify({
-          $schema: "https://opencode.ai/config.json",
+          $schema: "https://hypurr.dev/config.json",
           enabled_providers: ["anthropic", "google"],
         }),
       ),
@@ -2225,10 +2225,10 @@ test("parseManagedPlist handles empty config", async () => {
   const config = ConfigParse.schema(
     ConfigV1.Info,
     ConfigParse.jsonc(
-      await ConfigManaged.parseManagedPlist(JSON.stringify({ $schema: "https://opencode.ai/config.json" })),
+      await ConfigManaged.parseManagedPlist(JSON.stringify({ $schema: "https://hypurr.dev/config.json" })),
       "test:mobileconfig",
     ),
     "test:mobileconfig",
   )
-  expect(config.$schema).toBe("https://opencode.ai/config.json")
+  expect(config.$schema).toBe("https://hypurr.dev/config.json")
 })

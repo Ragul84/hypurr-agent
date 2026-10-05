@@ -32,13 +32,13 @@ describe("inlineCodeKind", () => {
     expect(inlineCodeKind(`terraform.tfvars`)).toBe("path")
     expect(inlineCodeKind(`pnpm-lock.yaml`)).toBe("path")
     expect(inlineCodeKind(`packages/desktop-electron`)).toBe("path")
-    expect(inlineCodeKind(`~/.config/opencode`)).toBe("path")
+    expect(inlineCodeKind(`~/.hypurr/agent/config`)).toBe("path")
     expect(inlineCodeKind(`@opencode-ai/app`)).toBe("path")
     expect(inlineCodeKind(`session/status`)).toBe("path")
   })
 
   test("detects urls", () => {
-    expect(inlineCodeKind(`https://opencode.ai/docs`)).toBe("url")
+    expect(inlineCodeKind(`https://hypurr.dev/docs`)).toBe("url")
     expect(inlineCodeKind(`http://localhost:4444`)).toBe("url")
     expect(inlineCodeKind(`file:///tmp/opencode`)).toBeUndefined()
     expect(inlineCodeKind(`ftp://opencode.ai/docs`)).toBeUndefined()

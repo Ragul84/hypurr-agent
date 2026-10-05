@@ -5,7 +5,7 @@ import os from "os"
 import path from "path"
 import { Process } from "@/util/process"
 
-const MANAGED_PLIST_DOMAIN = "ai.opencode.managed"
+const MANAGED_PLIST_DOMAIN = "dev.hypurr.agent.managed"
 
 // Keys injected by macOS/MDM into the managed plist that are not OpenCode config
 const PLIST_META = new Set([
@@ -22,7 +22,7 @@ function systemManagedConfigDir(): string {
     case "darwin":
       return "/Library/Application Support/opencode"
     case "win32":
-      return path.join(process.env.ProgramData || "C:\\ProgramData", "opencode")
+      return path.join(process.env.ProgramData || "C:\\ProgramData", "hypurr-agent")
     default:
       return "/etc/opencode"
   }
