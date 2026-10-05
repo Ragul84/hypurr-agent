@@ -38,7 +38,7 @@ type TuiAttentionHost = TuiAttention & {
   dispose(): void
 }
 
-const DEFAULT_TITLE = "opencode"
+const DEFAULT_TITLE = "hypurr-agent"
 const DEFAULT_PACK_ID = "hypurr-agent.default"
 const KV_SOUND_PACK = "attention_sound_pack"
 const TITLE_LIMIT = 80
