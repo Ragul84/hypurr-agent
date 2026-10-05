@@ -55,7 +55,7 @@ export const UninstallCommand = {
     UI.empty()
     UI.println(UI.logo("  "))
     UI.empty()
-    prompts.intro("Uninstall OpenCode")
+    prompts.intro("Uninstall Hypurr Agent")
 
     const method = await Installation.method()
     prompts.log.info(`Installation method: ${method}`)
@@ -133,9 +133,9 @@ async function showRemovalSummary(targets: RemovalTargets, method: Installation.
       pnpm: "pnpm uninstall -g hypurr-agent",
       bun: "bun remove -g hypurr-agent",
       yarn: "yarn global remove hypurr-agent",
-      brew: "brew uninstall opencode",
-      choco: "choco uninstall opencode",
-      scoop: "scoop uninstall opencode",
+      brew: "brew uninstall hypurr-agent",
+      choco: "choco uninstall hypurr-agent",
+      scoop: "scoop uninstall hypurr-agent",
     }
     prompts.log.info(`  ✓ Package: ${cmds[method] || method}`)
   }
@@ -184,15 +184,15 @@ async function executeUninstall(method: Installation.Method, targets: RemovalTar
       pnpm: ["pnpm", "uninstall", "-g", "hypurr-agent"],
       bun: ["bun", "remove", "-g", "hypurr-agent"],
       yarn: ["yarn", "global", "remove", "hypurr-agent"],
-      brew: ["brew", "uninstall", "opencode"],
-      choco: ["choco", "uninstall", "opencode"],
-      scoop: ["scoop", "uninstall", "opencode"],
+      brew: ["brew", "uninstall", "hypurr-agent"],
+      choco: ["choco", "uninstall", "hypurr-agent"],
+      scoop: ["scoop", "uninstall", "hypurr-agent"],
     }
 
     const cmd = cmds[method]
     if (cmd) {
       spinner.start(`Running ${cmd.join(" ")}...`)
-      const result = await Process.run(method === "choco" ? ["choco", "uninstall", "opencode", "-y", "-r"] : cmd, {
+      const result = await Process.run(method === "choco" ? ["choco", "uninstall", "hypurr-agent", "-y", "-r"] : cmd, {
         nothrow: true,
       })
       if (result.code !== 0) {
@@ -229,7 +229,7 @@ async function executeUninstall(method: Installation.Method, targets: RemovalTar
   }
 
   UI.empty()
-  prompts.log.success("Thank you for using OpenCode!")
+  prompts.log.success("Thank you for using Hypurr Agent!")
 }
 
 async function getShellConfigFile(): Promise<string | null> {

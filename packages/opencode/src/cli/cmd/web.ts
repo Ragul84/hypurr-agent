@@ -32,7 +32,7 @@ export const WebCommand = effectCmd({
   command: "web",
   builder: (yargs) => withNetworkOptions(yargs),
   describe: "start Hypurr Agent server and open web interface",
-  // Server loads instances per-request via x-opencode-directory header — no
+  // Server loads instances per-request via x-hypurr-agent-directory header — no
   // ambient project InstanceContext needed at startup.
   instance: false,
   handler: Effect.fn("Cli.web")(function* (args) {

@@ -7,7 +7,7 @@ export const ServeCommand = effectCmd({
   command: "serve",
   builder: (yargs) => withNetworkOptions(yargs),
   describe: "starts a headless Hypurr Agent server",
-  // Server loads instances per-request via x-opencode-directory header — no
+  // Server loads instances per-request via x-hypurr-agent-directory header — no
   // need for an ambient project InstanceContext at startup.
   instance: false,
   handler: Effect.fn("Cli.serve")(function* (args) {

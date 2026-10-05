@@ -382,11 +382,11 @@ function ApiMethod(props: ApiMethodProps) {
           "opencode-go": (
             <box gap={1}>
               <text fg={theme.textMuted}>
-                OpenCode Go is a $10 per month subscription that provides reliable access to popular open coding models
+                Hypurr Agent Go is a $10 per month subscription that provides reliable access to popular open coding models
                 with generous usage limits.
               </text>
               <text fg={theme.text}>
-                Go to <span style={{ fg: theme.primary }}>https://hypurr.dev/go</span> and enable OpenCode Go
+                Go to <span style={{ fg: theme.primary }}>https://hypurr.dev/go</span> and enable Hypurr Agent Go
               </text>
             </box>
           ),
