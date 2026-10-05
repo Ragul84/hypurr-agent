@@ -21,3 +21,4 @@ Hypurr Agent is based on OpenCode (MIT). See **LICENSE** and **NOTICE**.
 - **Discovery** `/.well-known/opencode` — upstream well-known path when probing remote providers.
 - **Social card CDN** `social-cards.sst.dev/opencode-share/...` — third-party asset URL path.
 - **Effect service tags** `@opencode/Run*` — internal Effect identifiers.
+- **Basic-auth env names** `OPENCODE_SERVER_USERNAME` / `OPENCODE_SERVER_PASSWORD` — env key names kept; default username is `hypurr-agent`.
